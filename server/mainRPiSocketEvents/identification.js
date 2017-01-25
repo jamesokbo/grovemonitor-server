@@ -27,7 +27,7 @@ module.exports=function(socket){
               }
             });
           }
-          //Si no se encuentra en la base datos se 
+          //Not found in our database 
           else{
             fn(errors.s001);
             socket.disconnect();
@@ -40,7 +40,7 @@ module.exports=function(socket){
           if(err){
             throw err;
           }
-          MainRPi.update({_id:mon._id,{$set:{mainRPiID:mon._id}}},function(err,res){
+          MainRPi.update({_id:mon._id},{$set:{mainRPiID:mon._id}},function(err,res){
             if(err){
               throw err;
             }

@@ -17,13 +17,14 @@ module.exports=function(socket){
               }
               console.log(res.ok+' '+res.nModified);
               if(res.ok==1 && res.nModified==1){
+                
                 fn({status:true});
               }
             });
           }
           //Si no se encuentra en la base datos se 
           else{
-            fn(errors.s001);
+            fn(null,errors.s001);
             socket.disconnect();
           }
         });
