@@ -34,7 +34,7 @@ var myApp=angular.module('myApp', [
       $rootScope.$on('$routeChangeStart',
         function (event, next, current) {
           AuthService.getUserStatus()
-          .then(function(){
+          .then(function(data){
             AuthService.isLoggedIn(function(res){
               if (next.access.restricted && !res){
                 $location.path('/login');

@@ -1,4 +1,4 @@
-myApp.controller('signupController', ['$scope', 'Socket', '$location', 'AuthService', function($scope, Socket, $location, AuthService){
+App.controller('signupController', ['$scope', 'Socket', '$location', 'AuthService', function($scope, Socket, $location, AuthService){
     console.log("entered signupController");
     $scope.form={};
     $scope.users=[];
@@ -12,12 +12,6 @@ myApp.controller('signupController', ['$scope', 'Socket', '$location', 'AuthServ
     $scope.form.email='';
     $scope.form.password='';
     $scope.error=false;
-    
-    /*
-    userApi.user.query({}, function(data){
-       $scope.users=data; 
-    });
-    */
     
     $scope.register=function(){
       // initial values
@@ -40,7 +34,6 @@ myApp.controller('signupController', ['$scope', 'Socket', '$location', 'AuthServ
         }
         if($scope.emailErrorMessage=='' && $scope.nameErrorMessage=='' && $scope.passwordErrorMessage==''){
             //If form is valid, call register from service
-            console.log('sending this email through socket: '+$scope.form.email);
             Socket.emit('checkEmail',$scope.form,function(res,err){
                 if(err){
                     $scope.error = true;
@@ -56,8 +49,7 @@ myApp.controller('signupController', ['$scope', 'Socket', '$location', 'AuthServ
                            AuthService.verifyEmail()
                            .then(function(){
                               $scope.signupSuccessMessage=$scope.signupSuccessMessage+" Sent Verification Email!"; 
-                           })
-                           .catch(function(){
+                           },function(){
                                $scope.signupSuccessMessage=$scope.signupSuccessMessage+" Couldn't send Verification Email!"; 
                            });
                         });
@@ -70,8 +62,7 @@ myApp.controller('signupController', ['$scope', 'Socket', '$location', 'AuthServ
                         $scope.form.name = '';
                         $scope.form.email='';
                         $scope.form.password='';
-                    })
-                    .catch(function () { 
+                    },function () { 
                         $scope.error = true;
                         $scope.signupErrorMessage = "Please check the fields with a warning!";
                         $scope.nameErrorMessage='That username is already taken!';
@@ -93,55 +84,5 @@ myApp.controller('signupController', ['$scope', 'Socket', '$location', 'AuthServ
             $scope.signupErrorMessage="Please check the fields with a warning";
             $scope.signupSuccessMessage='';
         }
-        
     };
-    
-    /*
-    $scope.addToDatabase= function(){
-      $scope.signupErrorMessage='';
-      $scope.emailErrorMessage='';
-      $scope.nameErrorMessage='';
-      $scope.passwordErrorMessage='';
-      $scope.signupSuccessMessage='';
-      
-      if($scope.form.email=='' || $scope.form.email==undefined){
-        $scope.emailErrorMessage='Enter a valid email address: example@example.com';
-      }
-      if($scope.form.name.length<8){
-        $scope.nameErrorMessage='Minimum of 8 characters';
-      }
-      if($scope.form.password.length<6){
-        $scope.passwordErrorMessage='Minimum of 6 characters';
-      }
-        
-      //Falta validar que el email sí sea un email, y que el username tenga mínimo 8 caracteres
-      if($scope.emailErrorMessage=='' && $scope.nameErrorMessage=='' && $scope.passwordErrorMessage==''){
-            Socket.emit('userSignup',$scope.form,function(res,err){
-                if(err){
-                    throw err;
-                }
-                if(res=='Success'){
-                    $scope.signupErrorMessage='';
-                    $scope.signupSuccessMessage='You have succesfully signed up!';
-                }
-                else if(res=='Username taken'){
-                    $scope.nameErrorMessage='Sorry but that username is already taken';
-                    $scope.signupSuccessMessage='';
-                }
-                else if(res=='Email taken'){
-                    $scope.emailErrorMessage='Sorry but that email address has already signed up';
-                    $scope.signupSuccessMessage='';
-                }
-                else{
-                    $scope.signupErrorMessage='Ooops... something weird happened';
-                    $scope.signupSuccessMessage='';
-                }
-            });    
-      }
-      else{
-            $scope.signupErrorMessage="Please check the fields with a warning";
-            $scope.signupSuccessMessage='';
-      }
-    };
-    */
 }]);

@@ -19,17 +19,16 @@ myApp.factory('AuthService',
         $http.post('/login',
         {username: username, password: password})
         // handle success
-        .success(function (data, status) {
-          if(status === 200 && data.status){
+        .then(function (data) {
+          console.log(data);
+          if(data.status === 200 && data.data.status){
             user = true;
             deferred.resolve();
           } else {
             user = false;
             deferred.reject();
           }
-        })
-        // handle error
-        .error(function (data) {
+        }, function (data) {
           user = false;
           deferred.reject();
         });
@@ -45,12 +44,10 @@ myApp.factory('AuthService',
         // send a get request to the server
         $http.get('/logout')
         // handle success
-        .success(function (data) {
+        .then(function (data) {
             user = false;
             deferred.resolve();
-        })
-        // handle error
-        .error(function (data) {
+        },function (data) {
           user = false;
           deferred.reject();
         });
@@ -64,15 +61,14 @@ myApp.factory('AuthService',
         $http.post('/signup',
         {email:email, username: username, password: password})
         // handle success
-        .success(function (data, status) {
-          if(status === 200 && data.status){
+        .then(function (data) {
+          console.log(data);
+          if(data.status === 200 && data.data.status){
             deferred.resolve();
           } else {
             deferred.reject();
           }
-        })
-        // handle error
-        .error(function (data) {
+        },function (data) {
           deferred.reject();
         });
         // return promise object
@@ -81,27 +77,24 @@ myApp.factory('AuthService',
     function getUserStatus() {
       return $http.get('/status')
       // handle success
-      .success(function (data) {
-        if(data.status){
+      .then(function (data) {
+        if(data.data.status){
           user = true;
         } else {
           user = false;
         }
-      })
-      // handle error
-      .error(function (data) {
+      }, function (data) {
         user = false;
       });
     }
     function getCurrentUser(fn){
       $http.get('/currentUser')
       //handle success
-      .success(function(data){
-        console.log("se obtuvo el ID del usuario "+data.username);
-        fn(data);
-      })
-      .error(function(data){
-        console.log(data);
+      .then(function(data){
+        console.log("se obtuvo el ID del usuario "+data.data.username);
+        fn(data.data);
+      }, function(data){
+        console.log(data.data);
         fn({});
       });
     }
@@ -109,12 +102,11 @@ myApp.factory('AuthService',
       var deferred = $q.defer();
       $http.get('/verifyEmail')
       //handle success
-      .success(function(data){
+      .then(function(data){
         console.log("Se mandó el correo con éxito");
         deferred.resolve();
-      })
-      .error(function(data){
-        console.log('error: '+ data.error);
+      }, function(data){
+        console.log('error: '+ data.data.error);
         deferred.reject();
       });
       
