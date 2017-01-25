@@ -1,0 +1,22 @@
+{
+  "name": "grovemonitor",
+  "description": "App for monitoring hydroponic groves using a flashed raspberry pi to work as the monitor and client of the server",
+  "main": "server.js",
+  "authors": [
+    "Jaime Okhuysen <jamesokbo@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "www.grovemonitor.io",
+  "dependencies": {
+    "angular": "^1.5.5",
+    "angular-route": "^1.5.5",
+    "angular-resource": "^1.5.5",
+    "socket.io-client": "^1.4.6",
+    "bootstrap": "^3.3.7",
+    "bootbox": "^4.4.0",
+    "angular-chart.js": "^0.10.2"
+  },
+  "install": {
+    "path": "client/libs"
+  }
+}

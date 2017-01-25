@@ -1,0 +1,80 @@
+<div class="col-md-8 col-sm-10 col-xs-12 col-md-offset-2 col-sm-offset-1 col-xs-offset-0">
+    <div class="mainRPiNameStatus col-md-12 col-sm-12 col-xs-12 mainRPiMin" ng-click='activateMainRPi(mainRPi)' 
+    ng-hide='activeMainRPi.mainRPiID==mainRPi.mainRPiID'>
+            <h2 class="mainRPiName">{{mainRPi.name}}</h2>
+            <span class="mainRPiStatus" ng-hide="!mainRPi.status">Connected</span>
+            <span class="mainRPiStatus" ng-hide="mainRPi.status">{{mainRPi.lastConnection | date: 'dd/MM/yyyy @ h:mma'}}</span>
+    </div>
+    <div ng-show='activeMainRPi.mainRPiID==mainRPi.mainRPiID'>
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" ng-attr-data-target="{{'#overview'+mainRPi.mainRPiID}}">All</a></li>
+            <li><a data-toggle="tab" ng-attr-data-target="{{'#settings'+mainRPi.mainRPiID}}" ng-click="deactivateMonitor()"><i class="fa fa-cog"></i></a></li>
+        </ul>
+        <div class='mainRPi-content tab-content'>
+            <div ng-attr-id="{{'overview'+mainRPi.mainRPiID}}" class="tab-pane fade in active">
+                <div class="mainRPiNameStatus col-md-12 col-sm-12 col-xs-12">
+                    <h2 class="mainRPiName">{{mainRPi.name}}</h2>
+                    <span class="mainRPiStatus" ng-hide="!mainRPi.status">Connected</span>
+                    <span class="mainRPiStatus" ng-hide="mainRPi.status">{{mainRPi.lastConnection | date: 'dd/MM/yyyy @ h:mma'}}</span>
+                </div>
+                <div class="monitorList col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-10 col-md-offset-1 alert alert-noMainRPi" ng-hide="monitors.length!=0">
+                            <p>Oops... It looks like no <strong>monitors</strong> are connected to this <strong>mainRPi</strong>!</p>    
+                    </div>
+                    <div ng-hide="monitors.length==0">
+                        <div class='snsr-group col-xs-6 col-sm-4 col-md-5'>
+                            <h5 class="snsr-title">Ambient</h5>
+                            <!-- no envMonitors' Alert!-->
+                            <div ng-repeat='envMonitor in envMonitors'>
+                                <button type="button" class="btn monitorMin col-xs-11 col-sm-11 col-md-11" ng-class='{active: activeMonitor.monitorID == envMonitor.monitorID}' ng-click="activateMonitor(envMonitor.monitorID)">{{envMonitor.name}}</button>
+                            </div>
+                        </div>
+                        <div class='snsr-group col-xs-6 col-sm-4 col-md-5'>
+                            <h5 class="snsr-title">Reservoir</h5>
+                            <!-- no resMonitors' Alert!-->
+                            <div ng-repeat='resMonitor in resMonitors'>
+                                <button type="button" class="btn monitorMin col-xs-11 col-sm-11 col-md-11" ng-class='{active: activeMonitor.monitorID == resMonitor.monitorID}' ng-click="activateMonitor(resMonitor.monitorID)">{{resMonitor.name}}</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+            <div ng-attr-id="{{'settings'+mainRPi.mainRPiID}}" class="tab-pane fade">
+                <ul class="nav nav-pills nav-stacked col-md-3 col-sm-3 col-xs-5">
+                    <li class="active"><a data-toggle="tab" ng-attr-data-target="{{'#generalSettings'+mainRPi.mainRPiID}}"><strong>General</strong></a></li>
+                </ul>
+                <div class="tab-content mainRPiSettings-content col-md-9 col-sm-9 col-xs-8">
+                    <div class="tab-pane active" ng-attr-id="{{'generalSettings'+mainRPi.mainRPiID}}">
+                        <table class="settingsTable" width="100%">
+                            <tr>
+                                <td><strong>Name:</strong></td>
+                                <td>
+                                    <span ng-hide='nameEdit'>{{mainRPi.name}}</span>
+                                    <input type='text' placeholder='{{mainRPi.name}}' ng-hide='!nameEdit' ng-model="newName"></input>
+                                </td>
+                                <td>
+                                    <i class="fa fa-pencil-square-o editButton" ng-hide='nameEdit || !mainRPi.status' ng-click='toggleMainRPiNameEdit()'></i>
+                                    <i class="fa fa-check editButton" ng-hide='!nameEdit' ng-click='editMainRPiName(mainRPi.mainRPiID,newName); deactivateEdit()'></i>
+                                    <i class="fa fa-times editButton" ng-hide='!nameEdit' ng-click='deactivateEdit()'></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><i class="fa fa-trash editButton" ng-click='deleteMainRPi(mainRPi.mainRPiID)'></i></td>
+                            </tr>
+                        </table>
+                        
+                    </div>
+                </div>
+            </div>
+            <div ng-attr-id="{{monitorWindow+mainRPi.mainRPiID}}" class="monitorWindow col-md-12 col-sm-12 col-xs-12" ng-show='activeMonitor!=null'>
+                <!-- TODO: Agregar el botón para quitar el monitor activo -->
+                <div ng-repeat='monitor in monitors'>
+                    <monitor object='monitor' ng-show='monitor.monitorID==activeMonitor.monitorID'></monitor>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>

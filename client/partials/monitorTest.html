@@ -1,0 +1,79 @@
+<div class="col-sm-6 col-sm-offset-3">
+
+    <h1>Monitor Test</h1>
+    <div class="alert alert-danger" ng-hide="errorMessage.length==0">{{errorMessage}}</div>
+    <div class="alert alert-success" ng-hide="successMessage.length==0">{{successMessage}}</div>
+    <div class="alert alert-success" ng-hide="connectionStatus.length==0">{{connectionStatus}}</div>
+    <div class="monitor col-md-10 col-md-offset-1">
+        <ul class="nav nav-tabs">
+          <li class="active"><a data-toggle="tab" ng-attr-data-target="{{'#ph'}}">pH</a></li>
+          <li><a data-toggle="tab" ng-attr-data-target="{{'#ec'}}">EC</a></a></li>
+          <li><a data-toggle="tab" ng-attr-data-target="{{'#wTemp'}}">wTemp</a></li>
+          <li><a data-toggle="tab" ng-attr-data-target="{{'#rh'}}">RH</a></li>
+          <li><a data-toggle="tab" ng-attr-data-target="{{'#aTemp'}}">aTemp</a></li>
+          <li><a data-toggle="tab" ng-attr-data-target="{{'#lux'}}">lux</a></li>
+        </ul>
+        <!-- CONTENIDO DE CADA "TAB" -->
+        <div class="tab-content monitor-content">
+            <!-- PH FORM -->
+            <div ng-attr-id="{{'ph'}}" class="tab-pane fade in active">
+                <form novalidate>
+                    <div class="form-group">
+                        <label>pH Reading</label>
+                        <input type="text" class="form-control" name="username" ng-model="form.phReading">
+                    </div>
+                    <button type="submit" class="btn btn-success" ng-click="phSubmit()">submit</button>
+                </form>
+            </div>
+            <!-- EC FORM -->
+            <div ng-attr-id="{{'ec'}}" class="tab-pane fade in">
+                <form novalidate>
+                    <div class="form-group">
+                        <label>EC Reading</label>
+                        <input type="text" class="form-control" name="username" ng-model="form.ecReading">
+                    </div>
+                    <button type="submit" class="btn btn-success" ng-click="ecSubmit()">submit</button>
+                </form>
+            </div>
+            <!-- WTEMP FORM -->
+            <div ng-attr-id="{{'wTemp'}}" class="tab-pane fade in">
+                <form novalidate>
+                    <div class="form-group">
+                        <label>wTemp Reading</label>
+                        <input type="text" class="form-control" name="username" ng-model="form.wTempReading">
+                    </div>
+                    <button type="submit" class="btn btn-success" ng-click="wTempSubmit()">submit</button>
+                </form>
+            </div>
+            <!-- RH FORM -->
+            <div ng-attr-id="{{'rh'}}" class="tab-pane fade in">
+                <form novalidate>
+                    <div class="form-group">
+                        <label>RH Reading</label>
+                        <input type="text" class="form-control" name="username" ng-model="form.rhReading">
+                    </div>
+                    <button type="submit" class="btn btn-success" ng-click="rhSubmit()">submit</button>
+                </form>
+            </div>
+            <!-- ATEMP FORM -->
+            <div ng-attr-id="{{'aTemp'}}" class="tab-pane fade in">
+                <form novalidate>
+                    <div class="form-group">
+                        <label>aTemp Reading</label>
+                        <input type="text" class="form-control" name="username" ng-model="form.aTempReading">
+                    </div>
+                    <button type="submit" class="btn btn-success" ng-click="aTempSubmit()">submit</button>
+                </form>
+            </div>
+            <!-- ATEMP FORM -->
+            <div ng-attr-id="{{'lux'}}" class="tab-pane fade in">
+                <form novalidate>
+                    <div class="form-group">
+                        <label>aTemp Reading</label>
+                        <input type="text" class="form-control" name="username" ng-model="form.luxReading">
+                    </div>
+                    <button type="submit" class="btn btn-success" ng-click="luxSubmit()">submit</button>
+                </form>
+            </div>
+        </div>
+</div>

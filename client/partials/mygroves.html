@@ -1,0 +1,269 @@
+<div class="row">
+    <div class="col-md-3 col-md-offset-1">
+        <h4>Welcome {{user.username}}!</h4>    
+    </div>
+    <div class="col-md-3 col-md-offset-5">
+        <button type="button" class="btn btn-info btn-add" ng-click="trueAddForm()" ng-hide="addForm">Add New Monitor!</button>
+    </div>
+    <div class="col-md-10 col-md-offset-1 alert alert-noMonitor" ng-hide="addForm || monitors.length!=0">
+            <p>Oops... It looks like you haven't added any <strong>monitors</strong> to your profile!</p>    
+    </div>
+    <!-- FORMA PARA AGREGAR UN NUEVO MONITOR -->
+    <div class="col-md-6 col-md-offset-3">   
+        <div id="addMonitorForm" ng-show="addForm">
+            <form class="well">
+                <div class="form-group">
+                    <label for="name">Monitor Name</label>
+                    <span class="hide" id="userID" ng-model="form.userID">001</span>
+                    <input type="text" class="form-control" id="name" ng-model="form.name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Monitor ID</label>
+                    <input type="text" class="form-control" id="monitorID" ng-model="form.monitorID">
+                </div>
+                <div class="row col-md-offset-1">
+                    <button type="submit" class="btn btn-success" ng-click="addToDatabase()">Add</button>
+                    <button type="submit" class="btn btn-danger" ng-click="falseAddForm()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- MONITORES -->
+    <div class="monitor col-md-10 col-md-offset-1" ng-repeat="monitor in monitors">
+        
+        <!-- LISTA DE TABS -->
+        <ul class="nav nav-tabs">
+          <li class="active"><a data-toggle="tab" ng-attr-data-target="{{'#overview'+$index}}">All</a></li>
+          <li><a data-toggle="tab" ng-attr-data-target="{{'#reservoir'+$index}}">Reservoir</a></a></li>
+          <li><a data-toggle="tab" ng-attr-data-target="{{'#ambient'+$index}}">Ambient</a></li>
+          <li><a data-toggle="tab" ng-attr-data-target="{{'#settings'+$index}}"><i class="fa fa-cog"></i></a></li>
+        </ul>
+        <!-- CONTENIDO DE CADA "TAB" -->
+        <div class="tab-content monitor-content">
+        <!-- "Tab" de vista general -->
+          <div ng-attr-id="{{'overview'+$index}}" class="tab-pane fade in active">
+            <div class="monitorNameStatus col-md-12 col-sm-12 col-xs-12">
+                <h2 class="monitorName">{{monitor.name}}</h2>
+                <span class="monitorStatus" ng-hide="!monitor.status">Connected</span>
+                <span class="monitorStatus" ng-hide="monitor.status">{{monitor.lastConnection | date: 'dd/MM/yyyy @ h:mma'}}</span>
+            </div>
+            <div class="col-xs-6 col-sm-4 col-md-5 col-md-offset-1 snsr-group">
+                <h5 class="snsr-title">Reservoir</h5>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default getReading" ng-click="mPhReading($index)" ng-disabled="!monitor.status">pH</button>
+                    <button type="button" class="btn btn-default reading" ng-class="{ 'error': monitor.phLast.error}">{{monitor.phLast.reading}}</button>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default getReading" ng-click="mEcReading($index)" ng-disabled="!monitor.status || !monitor.ecStatus">EC</button>
+                    <button type="button" class="btn btn-default reading" ng-class="{ 'error': monitor.ecLast.error}">{{oneDecimal(monitor.ecLast.reading)}}mS</button>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default getReading" ng-click="mWTempReading($index)" ng-disabled="!monitor.status || !monitor.wTempStatus"><i class="icon-thermometer2"></i></button>
+                    <button type="button" class="btn btn-default reading" ng-class="{ 'error': monitor.wTempLast.error}">{{getTempWithUnit(monitor.wTempLast.reading,monitor.tempUnit)}}</button>
+                </div> 
+            </div>
+            <div class="col-xs-6 col-sm-4 col-md-5 snsr-group">
+                <h5 class="snsr-title">Ambient</h5>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default getReading" ng-click="mLuxReading($index)" ng-disabled="!monitor.status || !monitor.luxStatus"><i class="fa fa-lightbulb-o"></i></button>
+                    <button type="button" class="btn btn-default reading" ng-class="{ 'error': monitor.luxLast.error}">{{monitor.luxLast.reading}}</button><!--Aquí va la lectura de LUX-->
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default getReading" ng-click="mRhReading($index)" ng-disabled="!monitor.status || !monitor.rhStatus"><i class="fa fa-tint"></i>%</button>
+                    <button type="button" class="btn btn-default reading" ng-class="{ 'error': monitor.rhLast.error}">{{oneDecimal(monitor.rhLast.reading)}}%</button><!--Aquí va la lectura de RH-->
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default getReading" ng-click="mATempReading($index)" ng-disabled="!monitor.status || !monitor.aTempStatus">T.</button>
+                    <button type="button" class="btn btn-default reading" ng-class="{ 'error': monitor.aTempLast.error}">{{getTempWithUnit(monitor.aTempLast.reading,monitor.tempUnit)}}</button>
+                </div> 
+            </div>
+          </div>
+          <!-- "Tab" de Reservoir -->
+          <div ng-attr-id="{{'reservoir'+$index}}" class="tab-pane fade">
+            <ul class="nav nav-pills nav-stacked col-md-1 col-sm-1 col-xs-2">
+              <li class="active"><a data-toggle="tab" ng-attr-data-target="{{'#ph'+$index}}"><strong>pH</strong></a></li>
+              <li><a data-toggle="tab" ng-attr-data-target="{{'#ec'+$index}}"><strong>EC</strong></a></li>
+              <li><a data-toggle="tab" ng-attr-data-target="{{'#wTemp'+$index}}">T.</a></li>
+            </ul>
+            <div class="tab-content col-md-11 col-sm-11 col-xs-10">
+                <div class="tab-pane active" ng-attr-id="{{'ph'+$index}}">
+                    <form>
+                        <div class="form-group col-md-3 col-sm-4 col-xs-4">
+                            <label for="fromDate">Start Date</label>
+                            <input type="date" class="form-control" id="phFromDate" ng-model="phForm[$index].fromDate">
+                        </div>
+                        <div class="form-group col-md-3 col-sm-4 col-xs-4">
+                            <label for="toDate">End Date</label>
+                            <input type="date" class="form-control" id="phToDate" ng-model="phForm[$index].toDate">
+                        </div>
+                        <div class="form-group col-md-2 col-sm-2 col-xs-2 graph-button">
+                            <button type="submit" class="btn btn-success" ng-click="phHistoric($index)">Graph!</button>
+                        </div>
+                    </form>
+                    <nvd3 options="phOptions" data="phData[$index]"></nvd3>
+                    <!--
+                    <canvas id='line' class="chart chart-line" chart-data="phReadings[$index]" chart-labels="phDates[$index]" chart-click="onClick"></canvas> 
+                    -->
+                </div>
+                <div class="tab-pane fade" ng-attr-id="{{'ec'+$index}}">
+                    <form>
+                        <div class="form-group col-md-3 col-sm-4 col-xs-4">
+                            <label for="fromDate">Start Date</label>
+                            <input type="date" class="form-control" id="ecFromDate" ng-model="ecForm[$index].fromDate">
+                        </div>
+                        <div class="form-group col-md-3 col-sm-4 col-xs-4">
+                            <label for="toDate">End Date</label>
+                            <input type="date" class="form-control" id="ecToDate" ng-model="ecForm[$index].toDate">
+                        </div>
+                        <div class="form-group col-md-2 col-sm-2 col-xs-2 graph-button">
+                            <button type="submit" class="btn btn-success" ng-click="ecHistoric($index)">Graph!</button>
+                        </div>
+                    </form>
+                    <nvd3 options="ecOptions" data="ecData[$index]"></nvd3>
+                    <!--
+                    <canvas id='line' class="chart chart-line" chart-data="ecReadings[$index]"
+                      chart-labels="ecDates[$index]" chart-click="onClick"></canvas>
+                    -->
+                </div>
+                <div class="tab-pane fade" ng-attr-id="{{'wTemp'+$index}}">
+                    <form>
+                        <div class="form-group col-md-3 col-sm-4 col-xs-4">
+                            <label for="fromDate">Start Date</label>
+                            <input type="date" class="form-control" id="wTempFromDate" ng-model="wTempForm[$index].fromDate">
+                        </div>
+                        <div class="form-group col-md-3 col-sm-4 col-xs-4">
+                            <label for="toDate">End Date</label>
+                            <input type="date" class="form-control" id="wTempToDate" ng-model="wTempForm[$index].toDate">
+                        </div>
+                        <div class="form-group col-md-2 col-sm-2 col-xs-2 graph-button">
+                            <button type="submit" class="btn btn-success" ng-click="wTempHistoric($index)">Graph!</button>
+                        </div>
+                    </form>
+                    <nvd3 options="wTempOptions" data="wTempData[$index]"></nvd3>
+                    <!--
+                    <canvas id='line' class="chart chart-line" chart-data="wTempReadings[$index]"
+                      chart-labels="wTempDates[$index]" chart-click="onClick"></canvas> 
+                    -->
+                </div>
+            </div>
+          </div>
+          <!-- "Tab" de Ambient -->
+          <div ng-attr-id="{{'ambient'+$index}}" class="tab-pane fade">
+            <ul class="nav nav-pills nav-stacked col-md-1 col-sm-1 col-xs-3">
+              <li class="active"><a data-toggle="tab" ng-attr-data-target="{{'#rh'+$index}}"><i class="fa fa-tint fa-large"></i>%</a></li>
+              <li><a data-toggle="tab" ng-attr-data-target="{{'#lux'+$index}}"><i class="fa fa-lightbulb-o fa-large"></i></a></li>
+              <li><a data-toggle="tab" ng-attr-data-target="{{'#aTemp'+$index}}">T</a></li>
+            </ul>
+            <div class="tab-content col-md-11 col-sm-11 col-xs-9">
+                <div class="tab-pane active" ng-attr-id="{{'aTemp'+$index}}">
+                    <form>
+                        <div class="form-group col-md-3 col-sm-4 col-xs-4">
+                            <label for="fromDate">Start Date</label>
+                            <input type="date" class="form-control" id="aTempFromDate" ng-model="aTempForm[$index].fromDate">
+                        </div>
+                        <div class="form-group col-md-3 col-sm-4 col-xs-4">
+                            <label for="toDate">End Date</label>
+                            <input type="date" class="form-control" id="aTempToDate" ng-model="aTempForm[$index].toDate">
+                        </div>
+                        <div class="form-group col-md-2 col-sm-2 col-xs-2 graph-button">
+                            <button type="submit" class="btn btn-success" ng-click="aTempHistoric($index)">Graph!</button>
+                        </div>
+                    </form>
+                    <nvd3 options="aTempOptions" data="aTempData[$index]"></nvd3>
+                    <!--
+                    <canvas id='line' class="chart chart-line" chart-data="aTempReadings[$index]"
+                      chart-labels="aTempDates[$index]" chart-click="onClick"></canvas> 
+                    -->
+                </div>
+                <div class="tab-pane fade" ng-attr-id="{{'rh'+$index}}">
+                    <form>
+                        <div class="form-group col-md-3 col-sm-4 col-xs-4">
+                            <label for="fromDate">Start Date</label>
+                            <input type="date" class="form-control" id="rhFromDate" ng-model="rhForm[$index].fromDate">
+                        </div>
+                        <div class="form-group col-md-3 col-sm-4 col-xs-4">
+                            <label for="toDate">End Date</label>
+                            <input type="date" class="form-control" id="rhToDate" ng-model="rhForm[$index].toDate">
+                        </div>
+                        <div class="form-group col-md-2 col-sm-2 col-xs-2 graph-button">
+                            <button type="submit" class="btn btn-success" ng-click="rhHistoric($index)">Graph!</button>
+                        </div>
+                    </form>
+                    <nvd3 options="rhOptions" data="rhData[$index]"></nvd3>
+                    <!--
+                    <canvas id='line' class="chart chart-line" chart-data="rhReadings[$index]"
+                      chart-labels="rhDates[$index]" chart-click="onClick"></canvas> 
+                    -->
+                </div>
+                <div class="tab-pane fade" ng-attr-id="{{'lux'+$index}}">
+                    <form>
+                        <div class="form-group col-md-3 col-sm-4 col-xs-4">
+                            <label for="fromDate">Start Date</label>
+                            <input type="date" class="form-control" id="luxFromDate" ng-model="luxForm[$index].fromDate">
+                        </div>
+                        <div class="form-group col-md-3 col-sm-4 col-xs-4">
+                            <label for="toDate">End Date</label>
+                            <input type="date" class="form-control" id="luxToDate" ng-model="luxForm[$index].toDate">
+                        </div>
+                        <div class="form-group col-md-2 col-sm-2 col-xs-2 graph-button">
+                            <button type="submit" class="btn btn-success" ng-click="luxHistoric($index)">Graph!</button>
+                        </div>
+                    </form>
+                    <nvd3 options="ecOptions" data="ecData[$index]"></nvd3>
+                    <!--
+                    <canvas id='line' class="chart chart-line" chart-data="luxReadings[$index]"
+                      chart-labels="luxDates[$index]" chart-click="onClick"></canvas> 
+                    -->
+                </div>
+            </div>
+          </div>
+          <!-- "Tab" Settings -->
+          <div ng-attr-id="{{'settings'+$index}}" class="tab-pane fade">
+            <ul class="nav nav-pills nav-stacked col-md-2 col-sm-3 col-xs-3">
+                <li class="active"><a data-toggle="tab" ng-attr-data-target="{{'#generalSettings'+$index}}"><strong>General</strong></a></li>
+                <li><a data-toggle="tab" ng-attr-data-target="{{'#phSettings'+$index}}"><strong>pH</strong></a></li>
+            </ul>
+            <div class="tab-content col-md-10 col-sm-9 col-xs-9">
+                <div class="tab-pane active" ng-attr-id="{{'generalSettings'+$index}}">
+                    <h3>General Settings</h3>
+                    <i class="fa fa-trash fa-large" ng-click="delete($index)"></i>
+                    <!--
+                    <form>
+                        <div class="form-group col-md-3 col-sm-4 col-xs-4">
+                            <label for="fromDate">Start Date</label>
+                            <input type="date" class="form-control" id="phFromDate" ng-model="phForm[$index].fromDate">
+                        </div>
+                        <div class="form-group col-md-3 col-sm-4 col-xs-4">
+                            <label for="toDate">End Date</label>
+                            <input type="date" class="form-control" id="phToDate" ng-model="phForm[$index].toDate">
+                        </div>
+                        <div class="form-group col-md-2 col-sm-2 col-xs-2 graph-button">
+                            <button type="submit" class="btn btn-success" ng-click="phHistoric($index)">Graph!</button>
+                        </div>
+                    </form>
+                    -->
+                </div>
+                <div class="tab-pane fade" ng-attr-id="{{'phSettings'+$index}}">
+                    <h3>pH Settings</h3>
+                    <!--
+                    <form>
+                        <div class="form-group col-md-3 col-sm-4 col-xs-4">
+                            <label for="fromDate">Start Date</label>
+                            <input type="date" class="form-control" id="phFromDate" ng-model="phForm[$index].fromDate">
+                        </div>
+                        <div class="form-group col-md-3 col-sm-4 col-xs-4">
+                            <label for="toDate">End Date</label>
+                            <input type="date" class="form-control" id="phToDate" ng-model="phForm[$index].toDate">
+                        </div>
+                        <div class="form-group col-md-2 col-sm-2 col-xs-2 graph-button">
+                            <button type="submit" class="btn btn-success" ng-click="phHistoric($index)">Graph!</button>
+                        </div>
+                    </form>
+                    -->
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>

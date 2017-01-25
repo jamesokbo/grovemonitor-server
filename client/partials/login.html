@@ -1,0 +1,28 @@
+<div class="col-sm-6 col-sm-offset-3">
+
+    <h1><span class="fa fa-sign-in"></span> Login</h1>
+    <div class="alert alert-danger" ng-hide="logInErrorMessage.length==0">{{logInErrorMessage}}</div>
+    <div class="alert alert-success" ng-hide="logInSuccessMessage.length==0">{{logInSuccessMessage}}</div>
+    <!-- LOGIN FORM -->
+    <form class='well' novalidate ng-hide="hideForm">
+        
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" class="form-control" name="username" ng-model="form.username">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" name="password" ng-model="form.password">
+        </div>
+        <button type="submit" class="btn btn-success btn-lg" ng-click="login()">Login</button>
+    </form>
+    <hr>
+
+    <div ng-hide="hideForm">
+        <p>Need an account? <a href="/signup">Signup</a></p>
+    </div>
+    <p>Go <a href="/">home</a>.</p>
+    
+    
+
+</div>

@@ -1,0 +1,633 @@
+@media (min-width: 992px){
+    .snsr-group{
+        margin-top:0%;
+        margin-right: 4%;
+        margin-left: 4%;
+        padding:2%;
+    }
+    .btn.reading{
+        width:63px;
+    }
+    .btn.getReading{
+        width:40px;
+    }
+    nvd3{
+        padding-left: 5%;
+        max-height: 200px;
+    }
+    #about-image {
+        margin-top: 50px;
+    }
+}
+@media (min-width: 768px){
+    .snsr-group{
+        margin-top:0%;
+        margin-right: 4%;
+        margin-left: 4%;
+    }
+    .btn.reading{
+        width:63px;
+    }
+    .btn.getReading{
+        width:40px;
+    }
+    canvas{
+        padding-left: 5%;
+        max-height: 200px;
+    }
+}
+
+@media (max-width: 768px){
+    .snsr-group{
+    }
+    .btn.reading{
+        width:63px;
+    }
+    .btn.getReading{
+        width:40px;
+    }
+    .mainRPiName{
+        font-size: 14px;
+        font-weight: bold;
+    }
+    .mainRPi-content{
+
+        padding: 4px;
+    }
+    canvas{
+        height:170px;
+        max-height: 170px;
+    }
+    .monitorNameStatus{
+        padding: 0px;
+        margin: 0px;
+    }
+    .monitor-content{
+        padding-right: 0px;
+    }
+}
+@font-face {
+    font-family: 'icomoon';
+    src:    url('../fonts/icomoon/icomoon.eot?t1n8it');
+    src:    url('../fonts/icomoon/icomoon.eot?t1n8it#iefix') format('embedded-opentype'),
+        url('../fonts/icomoon/icomoon.ttf?t1n8it') format('truetype'),
+        url('../fonts/icomoon/icomoon.woff?t1n8it') format('woff'),
+        url('../fonts/icomoon/icomoon.svg?t1n8it#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+[class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+    font-family: 'icomoon';
+    src:    url('fonts/icomoon.eot?3pdayb');
+    src:    url('fonts/icomoon.eot?3pdayb#iefix') format('embedded-opentype'),
+        url('fonts/icomoon.ttf?3pdayb') format('truetype'),
+        url('fonts/icomoon.woff?3pdayb') format('woff'),
+        url('fonts/icomoon.svg?3pdayb#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-lock:before {
+    content: "\e98f";
+}
+.icon-unlocked:before {
+    content: "\e990";
+}
+.icon-video-camera:before {
+    content: "\e903";
+}
+.icon-lab:before {
+    content: "\e913";
+}
+.icon-user:before {
+    content: "\e912";
+}
+.icon-stats-dots:before {
+    content: "\e909";
+}
+.icon-droplet:before {
+    content: "\e90a";
+}
+.icon-calendar:before {
+    content: "\e90b";
+}
+.icon-sun:before {
+    content: "\e90c";
+}
+.icon-paypal:before {
+    content: "\e90d";
+}
+.icon-credit-card:before {
+    content: "\e90e";
+}
+.icon-folder-plus:before {
+    content: "\e90f";
+}
+.icon-exit:before {
+    content: "\e910";
+}
+.icon-enter:before {
+    content: "\e911";
+}
+.icon-folder-download:before {
+    content: "\e900";
+}
+.icon-notice:before {
+    content: "\e914";
+}
+.icon-cog:before {
+    content: "\e915";
+}
+.icon-lamp:before {
+    content: "\e904";
+}
+.icon-lamp2:before {
+    content: "\e905";
+}
+.icon-tools:before {
+    content: "\e916";
+}
+.icon-info:before {
+    content: "\e917";
+}
+.icon-stop:before {
+    content: "\e918";
+}
+.icon-ruler:before {
+    content: "\e919";
+}
+.icon-checkmark:before {
+    content: "\e906";
+}
+.icon-trashcan:before {
+    content: "\e907";
+}
+.icon-cancel:before {
+    content: "\e908";
+}
+.icon-thermometer2:before {
+    content: "\e902";
+}
+.icon-thermometer:before {
+    content: "\e901";
+}
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+td{
+    padding:0 15px 0 15px;
+}
+body{
+    color:#4d1933;
+    background-color: #ccccb3;
+}
+input{
+    shadow:none;
+}
+input[type="Date"]{
+    color:#4d1933;
+    border-color:#f5f5f0;
+    background-color:#f5f5f0;
+}
+select{
+    color:#4d1933;
+    border-color:#f5f5f0;
+    background-color:#f5f5f0;
+}
+input[type="Text"]{
+    color:#4d1933;
+    border-color:#f5f5f0;
+    background-color:#f5f5f0;
+}
+input[type="Password"]{
+    color:#4d1933;
+    border-color:#f5f5f0;
+    background-color:#f5f5f0;
+}
+.well{
+    background-color:#b3e6cc;
+    border-color:#b3e6cc;;
+}
+.form-control{
+    color:#4d1933;
+    border-color:#f5f5f0;
+    background-color:#f5f5f0;
+}
+.form-group{
+    margin-top: -1%;
+}
+.mainRPi-content{
+    color:#4d1933;
+    overflow:auto; /*define la altura en automático*/
+    background-color:#b3e6cc;
+    border-right: 1px solid #b3e6cc;
+    border-left: 1px solid #b3e6cc;
+    border-bottom: 1px solid #b3e6cc;
+    border-radius:3px;
+    padding: 10px;
+}
+.mainRPiSettings-content{
+    overflow-y: auto; /*define la altura en automático*/
+    background-color: #4d1933;
+    color:#b3e6cc;
+    border: 1px solid #4d1933;
+    border-radius:3px;
+    padding: 5px;
+}
+.settingsTitle{
+    font-size: 150%;
+}
+.settingsTable{
+    table-layout: fixed;
+    text-align: center;
+}
+.settingsTable input{
+    text-align: center;
+    background-color: #4d1933;
+    color:#b3e6cc;
+    border: 0px solid #4d1933;
+}
+.editButton{
+    border-radius:2px;
+    padding: 5px;
+}
+.editButton:hover,
+.editButton:focus{
+    cursor:pointer;
+    color:#4d1933;
+    background-color:#b3e6cc;
+}
+.monitor-content{
+    overflow-y: auto; /*define la altura en automático*/
+    margin-top: 10px;
+    background-color:#ccccb3;
+    border: 1px solid #4d1933;
+    border-radius:3px;
+    padding: 5px;
+}
+.monitorSettingsContent{
+    height:200px;
+    overflow-y: auto; /*define la altura en automático*/
+    background-color: #4d1933;
+    color:#b3e6cc;
+    border: 1px solid #4d1933;
+    border-radius:3px;
+    padding: 5px;
+
+}
+.monitorSettings{
+    display: inline;
+}
+.activeMonitor-settings{
+    min-height: 200px;
+}
+.snsr{
+    margin-left: 3%;
+    margin-right: 3%;
+}
+.historicForm-title{
+    color:#b3e6cc;
+}
+.activeMonitor-content{
+    min-height:200px;
+    overflow-y: auto; /*define la altura en automático*/
+    background-color:#4d1933;
+    border: 1px solid #4d1933;
+    border-radius:3px;
+    padding: 10px;
+}
+.deactivate-monitor{
+    margin:0px;
+    color:#4d1933;
+    border-color:#ccccb3;
+    background-color:#ccccb3;
+}
+.deactivate-monitor:hover,
+.deactivate-monitor:focus,
+.deactivate-monitor:active{
+    color:#4d1933;
+    border-color:#e8e8da;
+    background-color:#f5f5f0;
+    outline: 0;
+}
+.nav-tabs > li >a {
+    color:#4d1933;
+    border: 1px solid #4d1933;
+    background-color:#b3e6cc;
+}
+.nav> li >a{
+    text-align: center;
+    vertical-align: middle;
+}
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+    color:#4d1933;
+    border: 1px solid #b3e6cc;
+    background-color:#b3e6cc;
+    border-bottom-color: transparent;
+}
+.nav-tabs > li > a,
+.nav-tabs > li > a:hover,
+.nav-tabs > li > a:focus {
+    border: 1px solid #ddd;
+    background-color:#d9f2e5;
+    cursor:pointer;
+}
+.mainRPiNameStatus{
+    padding-bottom: 20px;
+}
+.mainRPiName{
+    display: inline;
+}
+.monitorName{
+    margin-top: 0px;
+    display: inline;
+}
+.mainRPiStatus{
+    font-style:italic;
+}
+.monitorStatus{
+    font-style:italic;
+}
+.monitorMin{
+    padding:1%;
+    margin-bottom: 2%;
+}
+.monitor-info{
+    margin-bottom: 1%;
+    
+}
+.snsr-group{
+    padding: 2%;
+    color:#b3e6cc;
+    border-style: groove;
+    border-width: 1px;
+    border-color: #b3e6cc;
+    border-radius: 5px;
+    background-color: #4d1933;
+}
+
+h5.snsr-title{
+    font-size: medium;
+    font-weight: bold;
+    margin-top: 0px;
+    padding-bottom: 1px;
+}
+
+.btn-group{
+    padding:1%; 
+}
+.btn.deactivateMonitor{
+    padding:-5%;
+    
+}
+.btn-getReading {
+    color:#4d1933;
+    font-weight:bold;
+    background-color: #c2c2a3;
+    border-color: #c2c2a3;
+}
+
+.btn-getReading:focus,
+.btn-getReading.focus {
+    color:#4d1933;
+    font-weight:bold;
+    background-color: #c2c2a3;
+    border-color: #c2c2a3;
+}
+.btn-getReading:hover {
+    color:#4d1933;
+    font-weight:bold;
+    background-color: #c2c2a3;
+    border-color: #c2c2a3;
+}
+.btn-getReading:active,
+.btn-getReading.active,
+.open > .dropdown-toggle.btn-getReading {
+    color:#4d1933;
+    font-weight:bold;
+    background-color: #c2c2a3;
+    border-color: #c2c2a3;
+}
+.btn-reading {
+    color:#4d1933;
+    font-weight:bold;
+    background-color: #c2c2a3;
+    border-color: #c2c2a3;
+}
+.btn-reading:hover {
+    cursor:default;
+}
+.btn-reading.ok {
+    color:#4d1933;
+    font-weight:bold;
+    background-color: #d2e086;
+    border-color: #d2e086;
+}
+.btn-reading.warning {
+    color:#4d1933;
+    font-weight:bold;
+    background-color: #e0c586;
+    border-color: #e0c586;
+}
+.btn-reading.false {
+  opacity: 0.8;
+}
+.btn-reading.false:hover {
+  cursor:not-allowed;
+}
+
+.btn.monitorMin:hover,
+.btn.monitorMin:active,
+.btn.monitorMin.active,
+.btn.monitorMin.focus{
+    background-color:#ccccb3;
+    outline:0;
+}
+.btn.monitorMin{
+    color:#4d1933;
+    font-weight:bold;
+    background-color: #c2c2a3;
+    border-color: #c2c2a3;
+    outline:0;
+}
+.btn-add{
+    margin-top: 5%;
+}
+.btn-info {
+  color: #4d1933;
+  background-color: #d9f2e5;
+  border-color: #d9f2e5;
+}
+.btn-info:focus,
+.btn-info.focus {
+  color: #4d1933;
+  background-color: #b3e6cc;
+  border-color: #b3e6cc;
+}
+.btn-info:hover {
+  color: #4d1933;
+  background-color: #b3e6cc;
+  border-color: #b3e6cc;
+}
+.btn-info:active,
+.btn-info.active,
+.open > .dropdown-toggle.btn-info {
+    outline:0;
+    color: #4d1933;
+    background-color: #b3e6cc;
+    border-color: #b3e6cc;
+}
+.btn-info:active:hover,
+.btn-info.active:hover,
+.open > .dropdown-toggle.btn-info:hover,
+.btn-info:active:focus,
+.btn-info.active:focus,
+.open > .dropdown-toggle.btn-info:focus,
+.btn-info:active.focus,
+.btn-info.active.focus,
+.open > .dropdown-toggle.btn-info.focus {
+    outline:0;
+    color: #4d1933;
+    background-color: #b3e6cc;
+    border-color: #b3e6cc;
+}
+.addNewMainRPi{
+    margin-bottom: 2%;
+}
+.mainRPi{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.mainRPiMin{
+  color: #4d1933;
+  background-color: #d9f2e5;
+  border-color: #d9f2e5;
+  border-radius:3px;
+  margin-bottom:1%;
+  margin-top: 1%;
+  cursor:pointer;
+}
+.mainRPiMin:focus,
+.mainRPiMin.focus {
+  color: #4d1933;
+  background-color: #b3e6cc;
+  border-color: #b3e6cc;
+}
+.mainRPiMin:hover {
+  color: #4d1933;
+  background-color: #b3e6cc;
+  border-color: #b3e6cc;
+}
+.graph-button{
+     padding-top: 25px;
+}
+/*Se debe meter una imagen con el logo de la aplicación atrás de la gráfica, esto servirá de publicidad!*/
+canvas {
+    max-width:95%;
+    
+}
+.alert-noMainRPi{
+    color:#b3e6cc;
+    border-style: groove;
+    border-width: 1px;
+    border-color: #b3e6cc;
+    border-radius: 5px;
+    background-color: #4d1933;
+}
+.alert-success{
+    color:#4d1933;
+    background-color:#b3e6cc;
+    border-color:#00e6ac;
+}
+
+.tab-content {
+
+}
+
+.nav-tabs {
+    
+}
+
+
+.social-networks{
+    margin-top: 20px;
+}
+
+#about-image {
+    border-style: solid;
+    border-color: #1A000D;
+    border-width: 2px;
+}
+#about h2 {
+    border-bottom: 2px solid #1A000D;
+}
+h3{
+    font-size: 20px;
+    font-family: inherit;
+    font-weight: 300;
+    line-height: 0.5;
+    color: inherit;
+    margin-top: 1%;
+    margin-bottom: 0px;
+}
+p {
+    text-indent: 40px;
+}
+
+tr.ng-enter{
+    animation: bounceInUp 1s;
+}
+
+tr.ng-leave{
+    animation: bounceOut 1s;
+}
+
+.user-window{
+    border-left: 2px solid black;
+    height: 300px;
+}
+.username{
+    color: red;
+    font-weight: bold;
+}
+
+ul {
+    list-style-type: none;
+}

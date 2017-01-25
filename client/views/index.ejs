@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+    
+
+    <title>GroveMonitor</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="libs/bootstrap/bootstrap.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+    <link href="libs/angular-chart/angular-chart.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    
+    <!-- Custom styles for this template -->
+    <link href="navbar.css" rel="stylesheet">
+    <!--NVD3 stylesheet-->
+    <link rel="stylesheet" href="libs/nvd3/build/nv.d3.css">
+    
+  </head>
+  <body>
+    <div class="container">
+      <!-- Static navbar -->
+      <nav class="navbar navbar-default" ng-controller="navController">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/home">GroveMonitor.io</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li ng-class="{active: isActive('/home')}"><a href="/home">Home</a></li>
+              <li ng-class="{active: isActive('/about')}"><a href="/about">About</a></li>
+              <li ng-class="{active: isActive('/contact')}"><a href="/contact">Contact</a></li>
+              <li ng-class="{active: isActive('/mygroves')}"><a href="/mygroves">My Groves</a></li>
+              <li ng-class="{active: isActive('/monitorTest')}"><a href="/monitorTest">MonitorTest</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li ng-class="{active: isActive('/login')}" ng-hide="isLogged"><a href="/login">Login</a></li>
+              <li ng-show="isLogged"><a href='/home' ng-click="logOut()">Logout</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+      </nav>
+
+      <!-- Main component for a primary marketing message or call to action -->
+      <div class="container-fluid">
+        <div ng-view></div>
+      </div>
+    </div> 
+    
+    
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script type="text/javascript" src="libs/angular/angular.js"></script>
+    
+    <!--Angular Dependencies-->
+    <script type="text/javascript" src="libs/angular-route/angular-route.js"></script>
+    <script type="text/javascript" src="libs/angular-resource/angular-resource.js"></script>
+    <script type="text/javascript" src="libs/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script type="text/javascript" src="libs/bootstrap/bootstrap.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.js"></script>
+    <script type="text/javascript" src="libs/bootbox/bootbox.js"></script>
+    <script type="text/javascript" src="libs/socket.io-client/socket.io.js"></scripttype></script>
+    <script type="text/javascript" src="libs/angular-socket-io/socket.js"></script>
+    <script type="text/javascript" src="libs/chart/chart.js"></script>
+    <script type="text/javascript" src="libs/angular-chart/angular-chart.js"></script>
+    <script type="text/javascript" src="libs/d3/d3.js"></script>
+    <script type="text/javascript" src="libs/nvd3/build/nv.d3.js"></script> <!-- or use another assembly -->
+    <script type="text/javascript" src="libs/angular-nvd3/dist/angular-nvd3.js"></script>
+    
+    <script type="text/javascript" src="js/app.js"></script>
+    
+    <!--Controllers-->
+    <script type="text/javascript" src="js/controllers/homeController.js"></script>
+    <script type="text/javascript" src="js/controllers/loginController.js"></script>
+    <script type="text/javascript" src="js/controllers/signupController.js"></script>
+    <script type="text/javascript" src="js/controllers/monitorapiController.js"></script>
+    <script type="text/javascript" src="js/controllers/navController.js"></script>
+    <script type="text/javascript" src="js/controllers/aboutController.js"></script>
+    <script type="text/javascript" src="js/controllers/contactController.js"></script>
+    <script type="text/javascript" src="js/controllers/userapiController.js"></script>
+    <script type="text/javascript" src="js/controllers/monitorTestController.js"></script>
+    <!-- Services -->
+    <script type="text/javascript" src="js/services/api.js"></script>
+    <script type="text/javascript" src="js/services/AuthService.js"></script>
+    
+    <!-- Factories -->
+    <script type="text/javascript" src="js/services/SocketFactory.js"></script>
+
+  </body>
+</html>

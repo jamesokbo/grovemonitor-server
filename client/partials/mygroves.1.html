@@ -1,0 +1,39 @@
+<div class="row">
+    <div class='col-md-12 col-sm-12 col-xs-12'>
+        <div class="col-md-3 col-md-offset-1">
+            <h4>Welcome {{user.username}}!</h4>    
+        </div>
+        <div class="col-md-3 col-md-offset-5 addNewMainRPi">
+            <button type="button" class="btn btn-info btn-add" ng-click="trueAddForm()" ng-hide="addForm">Add New MainRPi!</button>
+        </div>
+    </div>
+    
+    <div class="col-md-10 col-md-offset-1 alert alert-noMainRPi" ng-hide="addForm || mainRPis.length!=0">
+            <p>Oops... It looks like you haven't added any <strong>mainRPis</strong> to your profile!</p>    
+    </div>
+    <!-- FORMA PARA AGREGAR UNA NUEVA MAINRPI -->
+    <div class="col-md-6 col-md-offset-3">   
+        <div id="addMainRPiForm" ng-show="addForm">
+            <form class="well">
+                <div class="form-group">
+                    <label for="name">MainRPi Name</label>
+                    <span class="hide" id="userID" ng-model="form.userID">001</span>
+                    <input type="text" class="form-control" id="name" ng-model="form.name">
+                </div>
+                <div class="form-group">
+                    <label for="mainRPi">MainRPi ID</label>
+                    <input type="text" class="form-control" id="mainRPiID" ng-model="form.mainRPiID">
+                </div>
+                <div class="row col-md-offset-1">
+                    <button type="submit" class="btn btn-success" ng-click="addToDatabase()">Add</button>
+                    <button type="submit" class="btn btn-danger" ng-click="falseAddForm()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- MAINRPIS -->
+    <div class="col-md-12 col-sm-12 col-xs-12" ng-repeat="mainRPi in mainRPis">
+        <mainrpi object="mainRPi"></mainrpi>
+    </div>
+</div>

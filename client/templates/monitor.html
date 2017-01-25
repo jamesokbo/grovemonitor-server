@@ -1,0 +1,192 @@
+<div class='monitor-content'>
+    <div class='row col-md-12 col-sm-12 col-xs-12 monitor-info'>
+        <div class='monitorNameStatus col-md-6 col-sm-5 col-xs-4'>
+            <h3 class='monitorName'><strong>{{monitor.name}}</strong></h3>
+            <span class="monitorStatus" ng-hide="!monitor.status || !mainRPi.status">Connected</span>
+            <span class="monitorStatus" ng-hide="monitor.status && mainRPi.status">Disconnected</span>
+        </div>
+        <div class="row col-md-3 col-sm-4 col-xs-6 col-md-offset-3 col-sm-offset-9 col-xs-offset-5 monitorSettings">
+            <button type='submit' class="btn deactivate-monitor" ng-click="toggleMonitorSettings()" ng-class="{active:monitorSettings}">
+                <i class="fa fa-cog" aria-hidden="true"></i>
+            </button>
+            <button type='submit' class="btn deactivate-monitor" ng-click="deactivateMonitor()">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+    <div ng-show="monitor.type=='envMonitor'">
+        <div ng-show="!monitorSettings">
+            <ul class="nav nav-pills nav-stacked col-md-2 col-sm-3 col-xs-4">
+                <li class="active"><a data-toggle="tab" ng-attr-data-target="{{'#now'+monitor.monitorID}}"><strong>Now</strong></a></li>
+                <li><a data-toggle="tab" ng-attr-data-target="{{'#historic'+monitor.monitorID}}"><i class="fa fa-line-chart"></i></a></li>
+            </ul>
+            <div class="tab-content activeMonitor-content col-md-9 col-sm-8 col-xs-8">
+                <div class="tab-pane active" ng-attr-id="{{'now'+monitor.monitorID}}">
+                    <div class="btn-group snsr" ng-show="monitor.aTemp.lastReading!=null">
+                        <button type="button" class="btn btn-getReading" ng-disabled="monitor.aTemp.status=='false'"
+                        ng-click="mReading({mainRPiID:mainRPi.mainRPiID,monitorID:monitor.monitorID,type:'aTemp'})"><i class="fa fa-thermometer-half"></i></button>
+                        <button type="button" class="btn btn-reading {{monitor.aTemp.status}}">{{getTempWithUnit(monitor.aTemp.lastReading,monitor.tempUnit)}}</button><!--Aquí va la lectura de LUX-->
+                    </div>
+                    <div class="btn-group snsr" ng-show="monitor.rh.lastReading!=null">
+                        <button type="button" class="btn btn-getReading" ng-disabled="monitor.rh.status=='false'"
+                        ng-click="mReading({mainRPiID:mainRPi.mainRPiID,monitorID:monitor.monitorID,type:'rh'})"><i class="fa fa-tint"></i>%</button>
+                        <button type="button" class="btn btn-reading {{monitor.rh.status}}">{{monitor.rh.lastReading}}%</button><!--Aquí va la lectura de LUX-->
+                    </div>
+                    <div class="btn-group snsr" ng-show="monitor.lux.lastReading!=null">
+                        <button type="button" class="btn btn-getReading" ng-disabled="monitor.lux.status=='false'"
+                        ng-click="mReading({mainRPiID:mainRPi.mainRPiID,monitorID:monitor.monitorID,type:'lux'})"><i class="fa fa-lightbulb-o"></i></button>
+                        <button type="button" class="btn btn-reading {{monitor.lux.status}}">{{monitor.lux.lastReading}}</button><!--Aquí va la lectura de LUX-->
+                    </div>
+                    <div class="btn-group snsr" ng-show="monitor.co2.lastReading!=null">
+                        <button type="button" class="btn btn-getReading" ng-disabled="monitor.co2.status=='false'"
+                        ng-click="mReading({mainRPiID:mainRPi.mainRPiID,monitorID:monitor.monitorID,type:'co2'})">co2</button>
+                        <button type="button" class="btn btn-reading {{monitor.co2.status}}">{{monitor.co2.lastReading}}ppm</button><!--Aquí va la lectura de LUX-->
+                    </div>
+                </div>
+                <div class="tab-pane fade" ng-attr-id="{{'historic'+monitor.monitorID}}">
+                    <form ng-attr-id="{{'historic-form'+monitor.monitorID}}">
+                        <div class="form-group col-md-4 col-sm-3 col-xs-3">
+                            <label class='historicForm-title' for="fromDate">Start Date</label>
+                            <input type="date" class="form-control" ng-attr-id="{{'fromDate'+monitor.monitorID}}" ng-model="historicForm[monitor.monitorID].fromDate">
+                        </div>
+                        <div class="form-group col-md-4 col-sm-3 col-xs-3">
+                            <label class='historicForm-title' for="toDate">End Date</label>
+                            <input type="date" class="form-control" ng-attr-id="{{'toDate'+monitor.monitorID}}" ng-model="historicForm[monitor.monitorID].toDate">
+                        </div>
+                        <div class="form-group col-md-2 col-sm-2 col-xs-2">
+                            <label class='historicForm-title' for="sensorSelect">Sensor</label>
+                            <select class="form-control" id="sensorSelect" ng-model="historicForm[monitor.monitorID].type">
+                                <option value='aTemp' ng-class='monitor.aTemp.status' ng-show="monitor.aTemp.lastReading!=null">Temp.</option>
+                                <option value='rh' ng-class='monitor.rh.status' ng-show="monitor.rh.lastReading!=null">RH</option>
+                                <option value='lux' ng-class='monitor.lux.status' ng-show="monitor.lux.lastReading!=null">Lux</option>
+                                <option value='co2' ng-class='monitor.co2.status' ng-show="monitor.co2.lastReading!=null">CO2</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-1 col-sm-1 col-xs-1 graph-button">
+                            <button type="submit" class="btn btn-success" ng-click="historicReadings(monitor.monitorID)">Graph</button>
+                        </div>
+                    </form>
+                    <nvd3 options="graphOptions[monitor.monitorID]" data="monitorData[monitor.monitorID]"></nvd3>
+                </div>
+            </div>
+        </div>
+        <div ng-show="monitorSettings">
+            <ul class="nav nav-pills nav-stacked col-md-2 col-sm-3 col-xs-4">
+                <li class="active"><a data-toggle="tab" ng-attr-data-target="{{'#generalSettings'+monitor.monitorID}}" 
+                ng-click="deactivateEdit()">
+                    <strong>General</strong></a>
+                </li>
+                <li><a data-toggle="tab" ng-attr-data-target="{{'#aTemp'+monitor.monitorID}}" ng-show="monitor.aTemp.lastReading!=null" 
+                ng-click="deactivateEdit()">
+                    <strong><i class="fa fa-thermometer-half fa-bold"></i></strong></a>
+                </li>
+                <li><a data-toggle="tab" ng-attr-data-target="{{'#rh'+monitor.monitorID}}" ng-show="monitor.rh.lastReading!=null"
+                ng-click="deactivateEdit()">
+                    <strong><i class="fa fa-tint"></i>%</strong></a>
+                </li>
+            </ul>
+            <div class="tab-content monitorSettingsContent col-md-9 col-sm-9 col-xs-8">
+                <div class="tab-pane active" ng-attr-id="{{'generalSettings'+monitor.monitorID}}">
+                    <span class="col-md-offset-6 col-sm-offset-6 col-xs-offset-6 settingsTitle"><i class="fa fa-cog"></i></span>
+                    <table class="settingsTable" width="100%">
+                        <tr>
+                            <td><strong>Name:</strong></td>
+                            <td>
+                                <span ng-hide='monitorNameEdit'>{{monitor.name}}</span>
+                                <input type='text' placeholder='{{monitor.name}}' ng-hide='!monitorNameEdit' ng-model="newMonitorName"></input>
+                            </td>
+                            <td>
+                                <i class="fa fa-pencil-square-o editButton" ng-hide='monitorNameEdit || !monitor.status' ng-click='toggleMonitorNameEdit()'></i>
+                                <i class="fa fa-check editButton" ng-hide='!monitorNameEdit' ng-click='editMonitorName({monitorID:monitor.monitorID,newName:newMonitorName}); deactivateEdit()'></i>
+                                <i class="fa fa-times editButton" ng-hide='!monitorNameEdit' ng-click='deactivateEdit()'></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong><i class="fa fa-thermometer-half fa-bold"></i>:</strong></td>
+                            <td>
+                                <span ng-hide='tempUnitEdit'>{{monitor.tempUnit}}</span>
+                                <select placeholder='{{monitor.tempUnit}}' ng-hide='!tempUnitEdit' ng-model="newTempUnit">
+                                    <option value="Celsius">Celsius</option>
+                                    <option value="Fahrenheit">Fahrenheit</option>
+                                </select>
+                            </td>
+                            <td>
+                                <i class="fa fa-pencil-square-o editButton" ng-hide='tempUnitEdit || !monitor.status' ng-click='toggleTempUnitEdit()'></i>
+                                <i class="fa fa-check editButton" ng-hide='!tempUnitEdit' ng-click='editMonitorTempUnit({monitorID:monitor.monitorID,newUnit:newTempUnit}); deactivateEdit()'></i>
+                                <i class="fa fa-times editButton" ng-hide='!tempUnitEdit' ng-click='deactivateEdit()'></i>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="tab-pane fade" ng-attr-id="{{'aTemp'+monitor.monitorID}}">
+                    <span class="col-md-offset-6 col-sm-offset-6 col-xs-offset-6 settingsTitle"><i class="fa fa-thermometer-half"></i></span>
+                    <table class="settingsTable" width="100%">
+                        <tr>
+                            <td><strong>Lower Bound:</strong></td>
+                            <td>
+                                <span ng-hide='lBoundEdit'>{{getTempWithUnit(monitor.aTemp.lBound,monitor.tempUnit)}}</span>
+                                <input type='text' placeholder='{{getConvertedTemp(monitor.aTemp.lBound,monitor.tempUnit)}}' ng-hide='!lBoundEdit' ng-model="newLBound"></input>
+                            </td>
+                            <td>
+                                <i class="fa fa-pencil-square-o editButton" ng-hide='lBoundEdit || !monitor.status' 
+                                ng-click='toggleLBoundEdit()'></i> 
+                                <i class="fa fa-check editButton" ng-hide='!lBoundEdit' 
+                                ng-click="editLBound({'monitorID':monitor.monitorID, 'newLBound':getTempInCelsius(newLBound,monitor.tempUnit),'type':'aTemp'})"></i>
+                                <i class="fa fa-times editButton" ng-hide='!lBoundEdit' ng-click='deactivateEdit()'></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Upper Bound:</strong></td>
+                            <td>
+                                <span ng-hide='uBoundEdit'>{{getTempWithUnit(monitor.aTemp.uBound,monitor.tempUnit)}}</span>
+                                <input type='text' placeholder='{{getConvertedTemp(monitor.aTemp.uBound,monitor.tempUnit)}}' ng-hide='!uBoundEdit' ng-model="newUBound"></input>
+                            </td>
+                            <td>
+                                <i class="fa fa-pencil-square-o editButton" ng-hide='uBoundEdit || !monitor.status' 
+                                ng-click='toggleUBoundEdit()'></i>
+                                <i class="fa fa-check editButton" ng-hide='!uBoundEdit' 
+                                ng-click="editUBound({'monitorID':monitor.monitorID,'newUBound':getTempInCelsius(newUBound,monitor.tempUnit),'type':'aTemp'})"></i>
+                                <i class="fa fa-times editButton" ng-hide='!uBoundEdit' ng-click='deactivateEdit()'></i>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="tab-pane fade" ng-attr-id="{{'rh'+monitor.monitorID}}">
+                    <table class="settingsTable" width="100%">
+                        <span class="col-md-offset-6 col-sm-offset-6 col-xs-offset-6 settingsTitle">
+                            <i class="fa fa-tint"></i><strong>%</strong>
+                        </span>
+                        <tr>
+                            <td><strong>Lower Bound:</strong></td>
+                            <td>
+                                <span ng-hide='lBoundEdit'>{{monitor.rh.lBound}}</span>
+                                <input type='text' placeholder='{{monitor.rh.lBound}}' ng-hide='!lBoundEdit' ng-model="newLBound"></input>
+                            </td>
+                            <td>
+                                <i class="fa fa-pencil-square-o editButton" ng-hide='lBoundEdit' ng-click='toggleLBoundEdit()'></i>
+                                <i class="fa fa-check editButton" ng-hide='!lBoundEdit' ng-click="editLBound({'monitorID':monitor.monitorID, 'newLBound':newLBound,'type':'rh'});
+                                deactivateEdit()"></i>
+                                <i class="fa fa-times editButton" ng-hide='!lBoundEdit' ng-click='deactivateEdit()'></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Upper Bound:</strong></td>
+                            <td>
+                                <span ng-hide='uBoundEdit'>{{monitor.rh.uBound}}</span>
+                                <input type='text' placeholder='{{monitor.rh.uBound}}' ng-hide='!uBoundEdit' ng-model="newUBound"></input>
+                            </td>
+                            <td>
+                                <i class="fa fa-pencil-square-o editButton" ng-hide='uBoundEdit' ng-click='toggleUBoundEdit()'></i>
+                                <i class="fa fa-check editButton" ng-hide='!uBoundEdit' ng-click="editUBound({'monitorID':monitor.monitorID, 'newUBound':newUBound,'type':'rh'});
+                                deactivateEdit()"></i>
+                                <i class="fa fa-times editButton" ng-hide='!uBoundEdit' ng-click='deactivateEdit()'></i>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+</div>

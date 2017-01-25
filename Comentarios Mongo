@@ -1,0 +1,2 @@
+Para iniciar mongo es necesario usar el comando:
+$sudo mongod -dbpath=data --smallfiles

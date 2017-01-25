@@ -1,0 +1,7 @@
+<div class='monitorMin col-md-3 col-sm-3 col-xs-3' ng-class='monitor.status'>
+    <div class="monitorNameStatus col-md-3 col-sm-3 col-xs-3">
+        <h2 class="monitorName">{{monitor.name}}</h2>
+        <span class="monitorStatus" ng-hide="!monitor.status">Connected</span>
+        <span class="monitorStatus" ng-hide="monitor.status">{{monitor.lastConnection | date: 'dd/MM/yyyy @ h:mma'}}</span>
+    </div>
+</div>

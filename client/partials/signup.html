@@ -1,0 +1,34 @@
+<div class="col-sm-6 col-sm-offset-3">
+
+    <h1><span class="fa fa-sign-in"></span> Signup</h1>
+
+    <!-- show any messages that come back with authentication -->
+    <div class="alert alert-danger" ng-hide="signupErrorMessage.length==0">{{signupErrorMessage}}</div>
+    <div class="alert alert-success" ng-hide="signupSuccessMessage.length==0">{{signupSuccessMessage}}</div>
+
+    <!--Signup Form-->
+    <form class='well' novalidate ng-hide="signupSuccessMessage.length!=0">
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" class="form-control" id="email" name="email" ng-model="form.email">
+            <div class="alert alert-danger" ng-hide="emailErrorMessage.length==0">{{emailErrorMessage}}</div>
+        </div>
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" class="form-control" id="name" name="email" ng-model="form.name">
+            <div class="alert alert-danger" ng-hide="nameErrorMessage.length==0">{{nameErrorMessage}}</div>
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" id="password" ng-model="form.password">
+            <div class="alert alert-danger" ng-hide="passwordErrorMessage.length==0">{{passwordErrorMessage}}</div>
+        </div>
+        <button type="submit" class="btn btn-success btn-lg" ng-click="register()">Signup</button>
+    </form>
+
+    <hr>
+
+    <p>Already have an account? <a href="/login">Login</a></p>
+    <p>Or go <a href="/">home</a>.</p>
+
+</div>
