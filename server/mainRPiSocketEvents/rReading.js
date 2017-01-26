@@ -46,7 +46,7 @@ module.exports=function(socket){
                 }
             }
             else{
-                fn(errors.s001);
+                fn(null,errors.s001);
             }
         });    
     });

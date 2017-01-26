@@ -4,7 +4,7 @@ var monArrays=require('../monitorArrays.js');
 var errors=require('../errors.js');
 
 module.exports=function(socket){
-  socket.on('monitorIdentification',function(data, fn){
+  socket.on('serverMonitorIdentification',function(data, fn){
        if(data.monitorID!='' && data.monitorID!=null){
         Monitor.find({_id:data.monitorID},function(err,docs){
           if(err){
@@ -22,14 +22,14 @@ module.exports=function(socket){
               }
             });
           }
-          //Si no se encuentra en la base datos se 
           else{
+            //Monitor sent an ID but it is not recognized by the server, this means it wasn't created by the server
             fn(null,errors.s001);
             socket.disconnect();
           }
         });
       }
-      //Si el ID está vacío, es un monitor nuevo y se le debe asignar ID nuevo
+      //If the ID is empty, server has to assign a new one
       else{
         Monitor.save(function(err,mon){
           if(err){
