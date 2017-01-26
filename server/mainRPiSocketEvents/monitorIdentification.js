@@ -4,7 +4,7 @@ var monArrays=require('../monitorArrays.js');
 var errors=require('../errors.js');
 
 module.exports=function(socket){
-  socket.on('serverMonitorIdentification',function(data, fn){
+  socket.on('monitorIdentification',function(data, fn){
        if(data.monitorID!='' && data.monitorID!=null){
         Monitor.find({_id:data.monitorID},function(err,docs){
           if(err){

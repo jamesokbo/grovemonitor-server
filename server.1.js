@@ -69,7 +69,7 @@ monitorIO.on('connection', function(socket){
   require('./server/mainRPISocketEvents/mainRPiIdentification.js')(socket);
   require('./server/mainRPISocketEvents/message.js')(socket);
   require('./server/mainRPISocketEvents/monitorDisconnect.js')(socket);
-  require('./server/mainRPISocketEvents/serverMonitorIdentification.js')(socket);
+  require('./server/mainRPISocketEvents/monitorIdentification.js')(socket);
   require('./server/mainRPISocketEvents/rReading.js')(socket);
 });
 

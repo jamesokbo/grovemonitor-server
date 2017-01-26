@@ -5,7 +5,6 @@ var errors=require('../errors.js');
 
 module.exports=function(socket){
     socket.on('rReading',function(data,fn){
-        var response={savedToServer:false,savedToMainRPi:false};
         
         Monitor.find({monitorID:data.monitorID},function(err,docs){
             if(err){
