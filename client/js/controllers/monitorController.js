@@ -14,9 +14,6 @@ myApp.controller('monitorController', ['$scope', 'Socket', function MonitorContr
     $scope.historicReadings= function(monitorID){
         var data=$scope.historicForm[monitorID];
         data.monitorID=monitorID;
-        /*
-        console.log(data);
-        */
         Socket.emit('historicReadings',data,function(err,res){
             if(err){
                 throw err;

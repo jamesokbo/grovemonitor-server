@@ -1,6 +1,6 @@
 var mongoose=require('mongoose');
 var MainRPi=require('../../../models/mainRPi.js');
-var monArrays=require('../../../monitorArrays.js');
+var mainRPiArrays=require('../../../mainRPiArrays.js');
 var Monitor=require('../../../models/monitor.js');
 var errors=require('../../../errors.js');
 var lowerBoundaries=require('../../../lowerBoundaries.js');

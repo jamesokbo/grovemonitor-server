@@ -1,6 +1,6 @@
 var mongoose=require('mongoose');
 var MainRPi=require('../../../models/mainRPi.js');
-var monArrays=require('../../../monitorArrays.js');
+var mainRPiArrays=require('../../../mainRPiArrays.js');
 var Monitor=require('../../../models/monitor.js');
 var errors=require('../../../errors.js');
 var lowerBoundaries=require('../../../lowerBoundaries.js');
@@ -18,9 +18,9 @@ module.exports=function(socket){
                     console.log(docs[0][data.type].uBound +">"+ data.newLBound);
                     if(docs[0][data.type].uBound>data.newLBound){
                         /*TODO: set the boundary on the monitor first, test and move to uBound
-                        mainRPiIndex=monArrays.mainRPiIDs.indexOf(docs[0].mainRPiID);
+                        mainRPiIndex=mainRPiArrays.mainRPiIDs.indexOf(docs[0].mainRPiID);
                         if(mainRPiIndex!=-1){
-                            monArrays.mainRPis[mainRPiIndex].emit('editLBound',data,function(res,err){
+                            mainRPiArrays.mainRPis[mainRPiIndex].emit('editLBound',data,function(res,err){
                                 if(err){
                                     fn(null,err);
                                 }

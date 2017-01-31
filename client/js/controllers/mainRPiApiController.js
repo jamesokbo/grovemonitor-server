@@ -135,8 +135,6 @@ myApp.controller('mainRPiApiController', ['$scope', 'Socket', 'AuthService', fun
     $scope.$on('$locationChangeStart', function(event){
         Socket.emit('disconnect');
     });
-
-    
     
     //AQUÍ SE DEFINEN LOS PROCEDIMIENTOS QUE CORREN EN AUTOMÁTICO
     //Despliega todos los mainRPies asociados a un usuario

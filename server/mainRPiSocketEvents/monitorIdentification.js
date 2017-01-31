@@ -1,6 +1,6 @@
-var mongoose=require('../../mongoose');
+var mongoose=require('mongoose');
 var Monitor=require('../models/monitor.js');
-var monArrays=require('../monitorArrays.js');
+var mainRPiArrays=require('../mainRPiArrays.js');
 var errors=require('../errors.js');
 
 module.exports=function(socket){

@@ -12,6 +12,7 @@ myApp.controller('mainRPiController', ['$scope', 'Socket', function MonitorContr
     $scope.activateMonitor=function(monitorID){
         $scope.activeMonitor=$scope.monitors[$scope.monitorIDs.indexOf(monitorID)];
         console.log('activated monitor: '+$scope.activeMonitor.monitorID);
+        //TODO: Activate the monitor on the monitor side, so that it starts reading continously and the readings get directly here 
     };
     $scope.deactivateMonitor=function(){
       $scope.activeMonitor=null;  

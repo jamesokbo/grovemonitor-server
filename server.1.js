@@ -1,6 +1,7 @@
 //Initialize express framework
 var express =require('express');
 var app=express();
+var fs=require('fs');
 
 var http= require('http').Server(app);
 var http2= require('http').Server(app);
@@ -52,7 +53,7 @@ var Monitor=require('./server/models/monitor');
 //Mongoose userSchema
 var User=require('./server/models/user');
 //Monitor arrays
-var monArrays=require('./server/monitorArrays.js');
+var mainRPiArrays=require('./server/mainRPiArrays.js');
 
 
 //Configuración de passport para autentificación de usuario
@@ -62,15 +63,15 @@ passport.deserializeUser(User.deserializeUser());
 
 //Lógica de comunicación con el mainRPi (Identificación y lecturas manuales)
 monitorIO.on('connection', function(socket){
+  console.log("received new mainRPi connection");
   socket.mainRPi=new MainRPi();
   socket.mainID='';
-  require('./server/mainRPISocketEvents/connectedMonitors.js')(socket);
-  require('./server/mainRPISocketEvents/disconnect.js')(socket);
-  require('./server/mainRPISocketEvents/mainRPiIdentification.js')(socket);
-  require('./server/mainRPISocketEvents/message.js')(socket);
-  require('./server/mainRPISocketEvents/monitorDisconnect.js')(socket);
-  require('./server/mainRPISocketEvents/monitorIdentification.js')(socket);
-  require('./server/mainRPISocketEvents/rReading.js')(socket);
+  require('./server/mainRPiSocketEvents/disconnect.js')(socket);
+  require('./server/mainRPiSocketEvents/mainRPiIdentification.js')(socket);
+  require('./server/mainRPiSocketEvents/message.js')(socket);
+  require('./server/mainRPiSocketEvents/monitorDisconnect.js')(socket);
+  require('./server/mainRPiSocketEvents/monitorIdentification.js')(socket);
+  require('./server/mainRPiSocketEvents/rReading.js')(socket);
 });
 
 //Lógica de comunicación con los usuarios
@@ -146,6 +147,8 @@ MainRPi.update({},{$set:{status:false}},{multi:true},function(err,res){
     });
   }
 });
+
+
 //arrancar el servidor de la web app
 http.listen(port, function(){
   console.log('server running @ port:'+port);

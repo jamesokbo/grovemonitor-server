@@ -1,13 +1,13 @@
 var mongoose=require('mongoose');
 var MainRPi=require('../../../models/mainRPi.js');
-var monArrays=require('../../../monitorArrays.js');
+var mainRPiArrays=require('../../../mainRPiArrays.js');
 var Monitor=require('../../../models/monitor.js');
 var errors=require('../../../errors.js');
 
 module.exports=function(socket){
     socket.on('changeReservoirSize',function(data,fn){
-        if(monArrays.monitorIDs.indexOf(data.mainRPiID.toString())!=-1){
-            monArrays.monitors[monArrays.monitorIDs.indexOf(data.mainRPiID.toString())].emit('changeReservoirSize',data,function(err,res){
+        if(mainRPiArrays.monitorIDs.indexOf(data.mainRPiID.toString())!=-1){
+            mainRPiArrays.monitors[mainRPiArrays.monitorIDs.indexOf(data.mainRPiID.toString())].emit('changeReservoirSize',data,function(err,res){
                 if(err){
                     fn(err);
                 }
