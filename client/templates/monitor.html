@@ -20,26 +20,10 @@
             <li><a data-toggle="tab" ng-attr-data-target="{{'#historic'+monitor.monitorID}}"><i class="fa fa-line-chart"></i></a></li>
         </ul>
         <div class="tab-content activeMonitor-content col-md-9 col-sm-8 col-xs-8">
+            <!--TODO: This sensors should be a directive with an inherited scope-->
             <div class="tab-pane active" ng-attr-id="{{'now'+monitor.monitorID}}">
-                <div class="btn-group snsr" ng-show="monitor.aTemp.lastReading!=null">
-                    <button type="button" class="btn btn-getReading" ng-disabled="monitor.aTemp.status=='false'"
-                    ng-click="mReading({mainRPiID:mainRPi.mainRPiID,monitorID:monitor.monitorID,type:'aTemp'})"><i class="fa fa-thermometer-half"></i></button>
-                    <button type="button" class="btn btn-reading {{monitor.aTemp.status}}">{{getTempWithUnit(monitor.aTemp.lastReading,monitor.tempUnit)}}</button><!--Aquí va la lectura de LUX-->
-                </div>
-                <div class="btn-group snsr" ng-show="monitor.rh.lastReading!=null">
-                    <button type="button" class="btn btn-getReading" ng-disabled="monitor.rh.status=='false'"
-                    ng-click="mReading({mainRPiID:mainRPi.mainRPiID,monitorID:monitor.monitorID,type:'rh'})"><i class="fa fa-tint"></i>%</button>
-                    <button type="button" class="btn btn-reading {{monitor.rh.status}}">{{monitor.rh.lastReading}}%</button><!--Aquí va la lectura de LUX-->
-                </div>
-                <div class="btn-group snsr" ng-show="monitor.lux.lastReading!=null">
-                    <button type="button" class="btn btn-getReading" ng-disabled="monitor.lux.status=='false'"
-                    ng-click="mReading({mainRPiID:mainRPi.mainRPiID,monitorID:monitor.monitorID,type:'lux'})"><i class="fa fa-lightbulb-o"></i></button>
-                    <button type="button" class="btn btn-reading {{monitor.lux.status}}">{{monitor.lux.lastReading}}</button><!--Aquí va la lectura de LUX-->
-                </div>
-                <div class="btn-group snsr" ng-show="monitor.co2.lastReading!=null">
-                    <button type="button" class="btn btn-getReading" ng-disabled="monitor.co2.status=='false'"
-                    ng-click="mReading({mainRPiID:mainRPi.mainRPiID,monitorID:monitor.monitorID,type:'co2'})">co2</button>
-                    <button type="button" class="btn btn-reading {{monitor.co2.status}}">{{monitor.co2.lastReading}}ppm</button><!--Aquí va la lectura de LUX-->
+                <div ng-repeat='sensor in monitor.sensors'>
+                    <sensor></sensor>
                 </div>
             </div>
             <div class="tab-pane fade" ng-attr-id="{{'historic'+monitor.monitorID}}">

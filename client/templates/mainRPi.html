@@ -23,17 +23,10 @@
                     </div>
                     <div ng-hide="monitors.length==0">
                         <div class='snsr-group col-xs-6 col-sm-4 col-md-5'>
-                            <h5 class="snsr-title">Ambient</h5>
+                            <h5 class="snsr-title">Monitors</h5>
                             <!-- no envMonitors' Alert!-->
-                            <div ng-repeat='envMonitor in envMonitors'>
-                                <button type="button" class="btn monitorMin col-xs-11 col-sm-11 col-md-11" ng-class='{active: activeMonitor.monitorID == envMonitor.monitorID}' ng-click="activateMonitor(envMonitor.monitorID)">{{envMonitor.name}}</button>
-                            </div>
-                        </div>
-                        <div class='snsr-group col-xs-6 col-sm-4 col-md-5'>
-                            <h5 class="snsr-title">Reservoir</h5>
-                            <!-- no resMonitors' Alert!-->
-                            <div ng-repeat='resMonitor in resMonitors'>
-                                <button type="button" class="btn monitorMin col-xs-11 col-sm-11 col-md-11" ng-class='{active: activeMonitor.monitorID == resMonitor.monitorID}' ng-click="activateMonitor(resMonitor.monitorID)">{{resMonitor.name}}</button>
+                            <div ng-repeat='monitor in monitors'>
+                                <button type="button" class="btn monitorMin col-xs-11 col-sm-11 col-md-11" ng-class='{active: activeMonitor.monitorID == monitor.monitorID}' ng-click="activateMonitor(monitor.monitorID)">{{monitor.name}}</button>
                             </div>
                         </div>
                     </div>

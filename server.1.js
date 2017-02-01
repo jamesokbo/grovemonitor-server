@@ -55,7 +55,6 @@ var User=require('./server/models/user');
 //Monitor arrays
 var mainRPiArrays=require('./server/mainRPiArrays.js');
 
-
 //Configuración de passport para autentificación de usuario
 passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());

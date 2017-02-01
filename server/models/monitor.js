@@ -10,14 +10,15 @@ var monitorSchema= mongoose.Schema({
     tempUnit:{type: String, default:'Celsius'},
     //Note: status in sensors can be "ok" if everything is in order, "warning" if the sensor is live but the reading is out of bounds, 
     //"false" if the sensor is down
-    aTemp:{status: String, lastReading:Number, lastDate:Number, lBound:Number, uBound:Number}, 
-    rh:{status: String, lastReading:Number, lastDate:Number, lBound:Number, uBound:Number},
-    co2:{status: String, lastReading:Number, lastDate:Number, lBound:Number, uBound:Number},
-    lux:{status: String, lastReading:Number, lastDate:Number, lBound:Number, uBound:Number},
-    ph:{status: String, lastReading:Number, lastDate:Number, lBound:Number, uBound:Number, cal4:Date, cal7:Date, cal10:Date},
-    ec:{status: String, lastReading:Number, lastDate:Number, lBound:Number, uBound:Number},
-    do:{status: String, lastReading:Number, lastDate:Number, lBound:Number, uBound:Number},
-    wTemp:{status: String, lastReading:Number, lastDate:Number, lBound:Number, uBound:Number},
+    aTemp:{nameText:{type:String, default:''}, nameIcon:{type:String, default:'fa fa-thermometer-half'}, status: String, lastReading:Number, lastDate:Number, lBound:Number, uBound:Number}, 
+    rh:{nameText:{type:String, default:'%'}, nameIcon:{type:String, default:'fa fa-tint'}, status: String, lastReading:Number, lastDate:Number, lBound:Number, uBound:Number},
+    co2:{nameText:{type:String, default:'CO2'}, nameIcon:{type:String, default:''}, status: String, lastReading:Number, lastDate:Number, lBound:Number, uBound:Number},
+    lux:{nameText:{type:String, default:''}, nameIcon:{type:String, default:'fa fa-lightbulb-o'},status: String, lastReading:Number, lastDate:Number, lBound:Number, uBound:Number},
+    ph:{nameText:{type:String, default:'pH'}, nameIcon:{type:String, default:''}, status: String, lastReading:Number, lastDate:Number, lBound:Number, uBound:Number, cal4:Date, cal7:Date, cal10:Date},
+    ec:{nameText:{type:String, default:'EC'}, nameIcon:{type:String, default:''}, status: String, lastReading:Number, lastDate:Number, lBound:Number, uBound:Number},
+    do:{nameText:{type:String, default:'DO'}, nameIcon:{type:String, default:''}, status: String, lastReading:Number, lastDate:Number, lBound:Number, uBound:Number},
+    wTemp:{nameText:{type:String, default:''}, nameIcon:{type:String, default:'fa fa-thermometer-half'}, status: String, lastReading:Number, lastDate:Number, lBound:Number, uBound:Number},
+    //TODO: Still have to chose how to handle the water level
     usReader: {status: String, lastReading:Number, lastDate:Number}, /*last distance reading*/
     resLevel: {lastReading:Number, lastDate:Number, lBound:Number, uBound:Number}, /* % of capacity */
 });
