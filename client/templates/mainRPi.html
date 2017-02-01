@@ -71,7 +71,7 @@
             <div ng-attr-id="{{monitorWindow+mainRPi.mainRPiID}}" class="monitorWindow col-md-12 col-sm-12 col-xs-12" ng-show='activeMonitor!=null'>
                 <!-- TODO: Agregar el botón para quitar el monitor activo -->
                 <div ng-repeat='monitor in monitors'>
-                    <monitor object='monitor' ng-show='monitor.monitorID==activeMonitor.monitorID'></monitor>
+                    <monitor ng-show='monitor.monitorID==activeMonitor.monitorID'></monitor>
                 </div>
             </div>
         </div>
