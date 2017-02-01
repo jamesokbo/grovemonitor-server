@@ -7,6 +7,7 @@ var monitorSchema= mongoose.Schema({
     name:String, /*name of the monitor, assigned by the user*/
     status: Boolean, /*true if connected to the main RPi*/
     lastConnection: Number, /*Last connection to the main RPi*/
+    sensors:[String], /*Name of the sensors connected to this monitor (the user is the one who says which sensors are connected) */
     resSize: {height: {type:Number,default:0}, area:{type:Number,default:0}}, /*height and area of reservoir, set by the user*/
     tempUnit:{type: String, default:'Celsius'},
     //Note: status in sensors can be "ok" if everything is in order, "warning" if the sensor is live but the reading is out of bounds, 
