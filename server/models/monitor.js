@@ -3,7 +3,6 @@ var Schema=mongoose.Schema;
 var monitorSchema= mongoose.Schema({
     monitorID:String, /*ID assigned by the server on first 'identification', kept as a .txt file in the Monitor*/
     mainRPiID:String, /*main RPi's ID to whom this resMonitor belongs to*/
-    type:String, /*either envMonitor or resMonitor*/
     name:String, /*name of the monitor, assigned by the user*/
     status: Boolean, /*true if connected to the main RPi*/
     lastConnection: Number, /*Last connection to the main RPi*/
