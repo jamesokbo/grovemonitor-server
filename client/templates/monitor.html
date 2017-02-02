@@ -58,14 +58,12 @@
             ng-click="deactivateEdit()">
                 <strong>General</strong></a>
             </li>
-            <li><a data-toggle="tab" ng-attr-data-target="{{'#aTemp'+monitor.monitorID}}" ng-show="monitor.aTemp.lastReading!=null" 
-            ng-click="deactivateEdit()">
-                <strong><i class="fa fa-thermometer-half fa-bold"></i></strong></a>
+            <li ng-repeat="sensor in monitor.sensors">
+                <a data-toggle="tab" ng-attr-data-target="{{'#'+sensor+monitor.monitorID}}" ng-click="deactivateEdit()">
+                    <strong><i ng-class="monitor[sensor].nameIcon"></i><span>{{monitor[sensor].nameText}}</span></strong>
+                </a>
             </li>
-            <li><a data-toggle="tab" ng-attr-data-target="{{'#rh'+monitor.monitorID}}" ng-show="monitor.rh.lastReading!=null"
-            ng-click="deactivateEdit()">
-                <strong><i class="fa fa-tint"></i>%</strong></a>
-            </li>
+            
         </ul>
         <div class="tab-content monitorSettingsContent col-md-9 col-sm-9 col-xs-8">
             <div class="tab-pane active" ng-attr-id="{{'generalSettings'+monitor.monitorID}}">
@@ -100,72 +98,7 @@
                     </tr>
                 </table>
             </div>
-            <div class="tab-pane fade" ng-attr-id="{{'aTemp'+monitor.monitorID}}">
-                <span class="col-md-offset-6 col-sm-offset-6 col-xs-offset-6 settingsTitle"><i class="fa fa-thermometer-half"></i></span>
-                <table class="settingsTable" width="100%">
-                    <tr>
-                        <td><strong>Lower Bound:</strong></td>
-                        <td>
-                            <span ng-hide='lBoundEdit'>{{getTempWithUnit(monitor.aTemp.lBound,monitor.tempUnit)}}</span>
-                            <input type='text' placeholder='{{getConvertedTemp(monitor.aTemp.lBound,monitor.tempUnit)}}' ng-hide='!lBoundEdit' ng-model="newLBound"></input>
-                        </td>
-                        <td>
-                            <i class="fa fa-pencil-square-o editButton" ng-hide='lBoundEdit || !monitor.status' 
-                            ng-click='toggleLBoundEdit()'></i> 
-                            <i class="fa fa-check editButton" ng-hide='!lBoundEdit' 
-                            ng-click="editLBound({'monitorID':monitor.monitorID, 'newLBound':getTempInCelsius(newLBound,monitor.tempUnit),'type':'aTemp'})"></i>
-                            <i class="fa fa-times editButton" ng-hide='!lBoundEdit' ng-click='deactivateEdit()'></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>Upper Bound:</strong></td>
-                        <td>
-                            <span ng-hide='uBoundEdit'>{{getTempWithUnit(monitor.aTemp.uBound,monitor.tempUnit)}}</span>
-                            <input type='text' placeholder='{{getConvertedTemp(monitor.aTemp.uBound,monitor.tempUnit)}}' ng-hide='!uBoundEdit' ng-model="newUBound"></input>
-                        </td>
-                        <td>
-                            <i class="fa fa-pencil-square-o editButton" ng-hide='uBoundEdit || !monitor.status' 
-                            ng-click='toggleUBoundEdit()'></i>
-                            <i class="fa fa-check editButton" ng-hide='!uBoundEdit' 
-                            ng-click="editUBound({'monitorID':monitor.monitorID,'newUBound':getTempInCelsius(newUBound,monitor.tempUnit),'type':'aTemp'})"></i>
-                            <i class="fa fa-times editButton" ng-hide='!uBoundEdit' ng-click='deactivateEdit()'></i>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="tab-pane fade" ng-attr-id="{{'rh'+monitor.monitorID}}">
-                <table class="settingsTable" width="100%">
-                    <span class="col-md-offset-6 col-sm-offset-6 col-xs-offset-6 settingsTitle">
-                        <i class="fa fa-tint"></i><strong>%</strong>
-                    </span>
-                    <tr>
-                        <td><strong>Lower Bound:</strong></td>
-                        <td>
-                            <span ng-hide='lBoundEdit'>{{monitor.rh.lBound}}</span>
-                            <input type='text' placeholder='{{monitor.rh.lBound}}' ng-hide='!lBoundEdit' ng-model="newLBound"></input>
-                        </td>
-                        <td>
-                            <i class="fa fa-pencil-square-o editButton" ng-hide='lBoundEdit' ng-click='toggleLBoundEdit()'></i>
-                            <i class="fa fa-check editButton" ng-hide='!lBoundEdit' ng-click="editLBound({'monitorID':monitor.monitorID, 'newLBound':newLBound,'type':'rh'});
-                            deactivateEdit()"></i>
-                            <i class="fa fa-times editButton" ng-hide='!lBoundEdit' ng-click='deactivateEdit()'></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>Upper Bound:</strong></td>
-                        <td>
-                            <span ng-hide='uBoundEdit'>{{monitor.rh.uBound}}</span>
-                            <input type='text' placeholder='{{monitor.rh.uBound}}' ng-hide='!uBoundEdit' ng-model="newUBound"></input>
-                        </td>
-                        <td>
-                            <i class="fa fa-pencil-square-o editButton" ng-hide='uBoundEdit' ng-click='toggleUBoundEdit()'></i>
-                            <i class="fa fa-check editButton" ng-hide='!uBoundEdit' ng-click="editUBound({'monitorID':monitor.monitorID, 'newUBound':newUBound,'type':'rh'});
-                            deactivateEdit()"></i>
-                            <i class="fa fa-times editButton" ng-hide='!uBoundEdit' ng-click='deactivateEdit()'></i>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+            <sensorsettings ng-repeat="sensor in monitor.sensors" class="tab-pane fade" ng-attr-id="{{sensor+monitor.monitorID}}"></sensorsettings>
         </div>
     </div>
 </div>
