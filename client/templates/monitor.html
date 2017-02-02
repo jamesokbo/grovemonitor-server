@@ -20,7 +20,6 @@
             <li><a data-toggle="tab" ng-attr-data-target="{{'#historic'+monitor.monitorID}}"><i class="fa fa-line-chart"></i></a></li>
         </ul>
         <div class="tab-content activeMonitor-content col-md-9 col-sm-8 col-xs-8">
-            <!--TODO: This sensors should be a directive with an inherited scope-->
             <div class="tab-pane active" ng-attr-id="{{'now'+monitor.monitorID}}">
                 <div ng-repeat='sensor in monitor.sensors'>
                     <sensor></sensor>
@@ -39,10 +38,10 @@
                     <div class="form-group col-md-2 col-sm-2 col-xs-2">
                         <label class='historicForm-title' for="sensorSelect">Sensor</label>
                         <select class="form-control" id="sensorSelect" ng-model="historicForm[monitor.monitorID].type">
-                            <option value='aTemp' ng-class='monitor.aTemp.status' ng-show="monitor.aTemp.lastReading!=null">Temp.</option>
-                            <option value='rh' ng-class='monitor.rh.status' ng-show="monitor.rh.lastReading!=null">RH</option>
-                            <option value='lux' ng-class='monitor.lux.status' ng-show="monitor.lux.lastReading!=null">Lux</option>
-                            <option value='co2' ng-class='monitor.co2.status' ng-show="monitor.co2.lastReading!=null">CO2</option>
+                            <option ng-repeat="sensor in monitor.sensors" value='{{sensor}}'> 
+                                <!-- TODO: Show these options as icons, not the sensor keyword https://github.com/FortAwesome/Font-Awesome/issues/996 -->
+                                <span>{{sensor}}</span>
+                            </option>
                         </select>
                     </div>
                     <div class="form-group col-md-1 col-sm-1 col-xs-1 graph-button">
