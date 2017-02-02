@@ -1,4 +1,4 @@
-App.controller('signupController', ['$scope', 'Socket', '$location', 'AuthService', function($scope, Socket, $location, AuthService){
+myApp.controller('signupController', ['$scope', 'Socket', '$location', 'AuthService', function($scope, Socket, $location, AuthService){
     console.log("entered signupController");
     $scope.form={};
     $scope.users=[];
