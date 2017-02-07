@@ -117,6 +117,7 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
                     console.log(err);
                 }
                 $scope.monitor=res;
+                $scope.deactivateEdit();
             });
         });
     };
@@ -146,7 +147,6 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
         });
     };
     */
-    
     $scope.mReading= function(data){
         Socket.emit('mReading',data,function(res,err){
             if(err){
@@ -157,7 +157,6 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
             $scope.monitor[data.sensor].status=res.status;
         });
     };
-    
     
     console.log('instantiated monitorController');
 }]);
