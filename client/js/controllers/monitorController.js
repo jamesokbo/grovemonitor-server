@@ -1,76 +1,162 @@
-myApp.controller('monitorController', ['$scope', 'Socket', function MonitorController($scope, Socket) {
-    $scope.ph;
-    $scope.ec;
-    $scope.do;
-    $scope.wTemp;
-    $scope.resLevel;
-    $scope.rh;
-    $scope.lux;
-    $scope.aTemp;
-    $scope.co2;
-    $scope.historicForm=[];
-    $scope.monitorData=[];
-
-    $scope.historicReadings= function(monitorID){
-        var data=$scope.historicForm[monitorID];
-        data.monitorID=monitorID;
-        Socket.emit('historicReadings',data,function(err,res){
-            if(err){
-                throw err;
-            }
-            console.log(res);
-            $scope.monitorData[data.monitorID]=res;
+myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', function MonitorController($scope, Socket, SensorService) {
+    
+    //Monitor General Settings
+    $scope.monitorNameEdit=false;
+    $scope.newMonitorName="";
+    $scope.monitorSettings=false;
+    
+    //Monitor Sensor Settings
+    $scope.units=[];
+    $scope.sensorUnitEdit=false;
+    $scope.lBoundEdit=false;
+    $scope.uBoundEdit=false;
+    $scope.newLBound;
+    $scope.newUBound;
+    
+    //Functions
+    $scope.loadMonitor=function(monitorID,fn){
+        Socket.emit('loadMonitor',{monitorID:monitorID},function(res,err){
+           if(err){
+               fn(null,err);
+           }
+           else{
+               fn(res);
+           }
         });
     };
     
-    //FUNCTIONAL
-    $scope.getConvertedTemp=function(reading,unit){
-            var convertedReading=0;
-            if(unit=='Celsius'){
-                return reading;
-            }
-            else if(unit=='Fahrenheit'){
-                convertedReading=Math.round((reading*9/5)+(32));
-                return convertedReading;
-            }
-        };
-    $scope.getTempWithUnit=function(reading,unit){
-            var convertedReading=0;
-            if(unit=='Celsius'){
-                convertedReading=Math.round(reading).toString();
-                return convertedReading+'°C';
-            }
-            else if(unit=='Fahrenheit'){
-                convertedReading=Math.round((reading*9/5)+(32));
-                convertedReading=convertedReading.toString();
-                return convertedReading+'°F';
-            }
-        };
-    $scope.getTempInCelsius=function(value,unit){
-        var convertedValue=0;
-        if(unit=='Celsius'){
-                convertedValue=Math.round(value);
-                return convertedValue;
-            }
-            else if(unit=='Fahrenheit'){
-                convertedValue=Math.round((value-32)*5/9);
-                return convertedValue;
-            }
-        
+    $scope.toggleMonitorSettings=function(){
+        if($scope.monitorSettings){
+            $scope.monitorSettings=false;
+        }  
+        else{
+            $scope.monitorSettings=true;
+        }
     };
-    $scope.getTempUnit=function(index){
-                var unit=$scope.mainRPis[index].tempUnit;
-                if(unit=='Celsius'){
-                    return '°C';
-                }
-                else if(unit=='Fahrenheit'){
-                    return '°F';
-                }
-            };
-    $scope.oneDecimal=function(number){
-          return Math.round(number*10)/10;  
+    $scope.toggleSensorUnitEdit=function(){
+        $scope.deactivateEdit();
+        if($scope.sensorUnitEdit){
+            $scope.sensorUnitEdit=false;
+        }  
+        else{
+            $scope.sensorUnitEdit=true;
+        }
+    };
+    $scope.toggleMonitorNameEdit=function(){
+        $scope.deactivateEdit();
+        if($scope.monitorNameEdit){
+            $scope.monitorNameEdit=false;
+        }  
+        else{
+            $scope.monitorNameEdit=true;
+        }
+    };
+    $scope.toggleLBoundEdit=function(){
+        $scope.deactivateEdit();
+        if($scope.lBoundEdit){
+            $scope.lBoundEdit=false;
+        }
+        else{
+            $scope.lBoundEdit=true;
+        }
+    };
+    $scope.toggleUBoundEdit=function(){
+        $scope.deactivateEdit();
+        if($scope.uBoundEdit){
+            $scope.uBoundEdit=false;
+        }
+        else{
+            $scope.uBoundEdit=true;
+        }
+    };
+    $scope.deactivateEdit=function(){
+        $scope.monitorNameEdit=false;
+        $scope.sensorUnitEdit=false;
+        $scope.lBoundEdit=false;
+        $scope.uBoundEdit=false;
+        $scope.newSensorUnit=null;
+        $scope.newUBound=null;
+        $scope.newLBound=null;
+    };
+    
+    
+    /*
+    $scope.editMonitorName=function(data){
+      if(data.newName!=""){
+        Socket.emit('editMonitorName',data,function(response,err){
+            if(err){
+                throw err;
+            }
+            if(response.status){
+                //TODO: Load the individual monitor
+                $scope.monitors[$scope.monitorIDs.indexOf(data.monitorID)].name=data.newName;
+                $scope.deactivateEdit();
+            }
+        });
+      }  
+    };
+    */
+    $scope.getSensorUnits=function(sensor){
+        SensorService.getSensorUnits(sensor,function(units){
+            $scope.units=units;
+        });
+    };
+    $scope.editSensorUnit=function(sensor,newUnit){
+        console.log('editing sensor unit');
+        var data={
+            monitorID:$scope.monitor.monitorID,
+            sensor:sensor,
+            newUnit:newUnit
         };
-
+        Socket.emit('editSensorUnit',data,function(res,err){
+            if(err){
+                console.log(err);
+            }
+            $scope.loadMonitor($scope.monitor.monitorID,function(res,err){
+                if(err){
+                    console.log(err);
+                }
+                $scope.monitor=res;
+            });
+        });
+    };
+    /*
+    $scope.editLBound=function(data){
+        Socket.emit('editLBound',data,function(response,err){
+            if(err){
+                throw err;
+            }
+            if(response.status){
+                //TODO: place the new boundary without loading the monitor
+                $scope.monitors[$scope.monitorIDs.indexOf(data.monitorID)][data.type].lBound=data.newLBound;
+                $scope.deactivateEdit();
+            }
+        });
+    };
+    $scope.editUBound=function(data){
+        Socket.emit('editUBound',data,function(response,err){
+            if(err){
+                throw err;
+            }
+            if(response.status){
+                //TODO: place the new boundary without loading the monitor
+                $scope.monitors[$scope.monitorIDs.indexOf(data.monitorID)][data.type].uBound=data.newUBound;
+                $scope.deactivateEdit();
+            }
+        });
+    };
+    */
+    
+    $scope.mReading= function(data){
+        Socket.emit('mReading',data,function(res,err){
+            if(err){
+                throw err;
+            }
+            $scope.monitor[data.sensor].lastReading=res.reading;
+            $scope.monitor[data.sensor].lastDate=res.date;
+            $scope.monitor[data.sensor].status=res.status;
+        });
+    };
     
     
     console.log('instantiated monitorController');
