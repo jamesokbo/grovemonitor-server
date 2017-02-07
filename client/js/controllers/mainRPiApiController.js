@@ -57,10 +57,6 @@ myApp.controller('mainRPiApiController', ['$scope', 'Socket', 'AuthService', fun
             });
         }
     };
-    //Activar MainRPi
-    $scope.activateMainRPi= function(mainRPi){
-       $scope.activeMainRPi=mainRPi; 
-    };
     //Cambiar nombre de MainRPi
     $scope.editMainRPiName=function(id, newName){
       if(newName!=""){

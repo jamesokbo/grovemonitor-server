@@ -118,8 +118,8 @@ io.on('connection', function(socket){
   require('./server/userSocketEvents/monitorEvents/monitorSettingsEvents/editUBound.js')(socket);
   //Edit MonitorName
   require('./server/userSocketEvents/monitorEvents/monitorSettingsEvents/editMonitorName.js')(socket);
-  //Edit tempUnit
-  require('./server/userSocketEvents/monitorEvents/monitorSettingsEvents/editMonitorTempUnit.js')(socket);
+  //Edit sensorUnit
+  require('./server/userSocketEvents/monitorEvents/monitorSettingsEvents/editSensorUnit.js')(socket);
 });
 
 //DECLARACIÓN DE RUTAS DE APIS:

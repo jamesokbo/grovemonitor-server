@@ -1,7 +1,10 @@
 myApp.directive('mainrpi', function(){
     return {
         restrict : 'E',
-        scope:false,
+        scope:{
+            mainRPi:'=mainRpi',
+            activeMainRPi:'=activeMainRpi'
+        },
         controller: 'mainRPiController',
         templateUrl : '/templates/mainRPi.html',
     };

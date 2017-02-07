@@ -3,6 +3,24 @@
 </span>
 <table class="settingsTable" width="100%">
     <tr>
+        <td><strong>Unit:</strong></td>
+        <td>
+            <span ng-hide='sensorUnitEdit'>{{monitor[sensor].unit}}</span>
+            <select ng-show='sensorUnitEdit' class="form-control" id="sensorUnitSelect" ng-model="selectedUnit">
+                <option ng-repeat="unit in units" ng-value='unit'>
+                    <span>{{unit}}</span>
+                </option>
+            </select>
+        </td>
+        <td>
+            <i class="fa fa-pencil-square-o editButton" ng-hide='sensorUnitEdit || !monitor.status' 
+            ng-click='getSensorUnits(sensor);toggleSensorUnitEdit()'></i> 
+            <i class="fa fa-check editButton" ng-hide='!sensorUnitEdit' 
+            ng-click="editSensorUnit(sensor,selectedUnit)"></i>
+            <i class="fa fa-times editButton" ng-hide='!sensorUnitEdit' ng-click='deactivateEdit()'></i>
+        </td>
+    </tr>
+    <tr>
         <td><strong>Lower Bound:</strong></td>
         <td>
             <span ng-hide='lBoundEdit'>{{monitor[sensor].lBound}}</span>

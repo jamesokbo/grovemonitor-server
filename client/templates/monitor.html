@@ -5,12 +5,9 @@
             <span class="monitorStatus" ng-hide="!monitor.status || !mainRPi.status">Connected</span>
             <span class="monitorStatus" ng-hide="monitor.status && mainRPi.status">Disconnected</span>
         </div>
-        <div class="row col-md-3 col-sm-4 col-xs-6 col-md-offset-3 col-sm-offset-9 col-xs-offset-5 monitorSettings">
+        <div class="col-md-2 col-sm-2 col-xs-3 col-md-offset-3 col-sm-offset-10 col-xs-offset-5 monitorSettings">
             <button type='submit' class="btn deactivate-monitor" ng-click="toggleMonitorSettings()" ng-class="{active:monitorSettings}">
                 <i class="fa fa-cog" aria-hidden="true"></i>
-            </button>
-            <button type='submit' class="btn deactivate-monitor" ng-click="deactivateMonitor()">
-                <i class="fa fa-times" aria-hidden="true"></i>
             </button>
         </div>
     </div>
@@ -77,21 +74,6 @@
                             <i class="fa fa-pencil-square-o editButton" ng-hide='monitorNameEdit || !monitor.status' ng-click='toggleMonitorNameEdit()'></i>
                             <i class="fa fa-check editButton" ng-hide='!monitorNameEdit' ng-click='editMonitorName({monitorID:monitor.monitorID,newName:newMonitorName}); deactivateEdit()'></i>
                             <i class="fa fa-times editButton" ng-hide='!monitorNameEdit' ng-click='deactivateEdit()'></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong><i class="fa fa-thermometer-half fa-bold"></i>:</strong></td>
-                        <td>
-                            <span ng-hide='tempUnitEdit'>{{monitor.tempUnit}}</span>
-                            <select placeholder='{{monitor.tempUnit}}' ng-hide='!tempUnitEdit' ng-model="newTempUnit">
-                                <option value="Celsius">Celsius</option>
-                                <option value="Fahrenheit">Fahrenheit</option>
-                            </select>
-                        </td>
-                        <td>
-                            <i class="fa fa-pencil-square-o editButton" ng-hide='tempUnitEdit || !monitor.status' ng-click='toggleTempUnitEdit()'></i>
-                            <i class="fa fa-check editButton" ng-hide='!tempUnitEdit' ng-click='editMonitorTempUnit({monitorID:monitor.monitorID,newUnit:newTempUnit}); deactivateEdit()'></i>
-                            <i class="fa fa-times editButton" ng-hide='!tempUnitEdit' ng-click='deactivateEdit()'></i>
                         </td>
                     </tr>
                 </table>

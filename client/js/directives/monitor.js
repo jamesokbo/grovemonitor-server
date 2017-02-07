@@ -1,8 +1,12 @@
 myApp.directive('monitor', function(){
-    return {
+    return{
         restrict : 'E',
-        scope:false,
+        scope:{
+            monitor:'=monitorData',
+            mainRPi:'=mainRpi',
+            activeMonitor:'='
+        },
         controller: 'monitorController',
-        templateUrl : '/templates/monitor.html',
+        templateUrl : '/templates/monitor.html'
     };
 });

@@ -9,7 +9,6 @@ module.exports=function(socket){
           if(err){
             throw err;
           }
-          console.log(res);
           fn(res[0]);
         });
       });

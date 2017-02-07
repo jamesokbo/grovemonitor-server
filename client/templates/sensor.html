@@ -1,6 +1,6 @@
 <div class="btn-group snsr">
     <button type="button" class="btn btn-getReading" ng-disabled="monitor[sensor].status=='false'"
-    ng-click="mReading({mainRPiID:mainRPi.mainRPiID,monitorID:monitor.monitorID,type:[sensor]})">
+    ng-click="mReading({mainRPiID:mainRPi.mainRPiID,monitorID:monitor.monitorID,sensor:sensor})">
         <i ng-class="monitor[sensor].nameIcon"></i><span>{{monitor[sensor].nameText}}</span>
     </button>
     <button type="button" class="btn btn-reading {{monitor[sensor].status}}">{{monitor[sensor].lastReading+' '+monitor[sensor].unit}}</button><!--Aquí va la lectura de LUX-->
