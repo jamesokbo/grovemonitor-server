@@ -52,7 +52,6 @@ function MainRPiController($scope, Socket, SensorService) {
                 throw err;
             }
             $scope.monitors=res;
-            
             for(var i=0; i<res.length; i++){
                 $scope.monitorIDs[i]=res[i].monitorID;
             }

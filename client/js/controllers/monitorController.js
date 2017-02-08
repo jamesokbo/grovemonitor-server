@@ -24,6 +24,11 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
            }
         });
     };
+    $scope.initiateMonitor=function(monitor){
+      for(var i=0; i<monitor.sensors.length; i++){
+          
+      }  
+    };
     
     $scope.toggleMonitorSettings=function(){
         if($scope.monitorSettings){
@@ -100,6 +105,9 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
         SensorService.getSensorUnits(sensor,function(units){
             $scope.units=units;
         });
+    };
+    $scope.getConvertedReading=function(sensor,unit,reading){
+        return SensorService.getConvertedReading(sensor,unit,reading);
     };
     $scope.editSensorUnit=function(sensor,newUnit){
         console.log('editing sensor unit');

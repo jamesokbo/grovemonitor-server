@@ -9,35 +9,43 @@ var monitorSchema= mongoose.Schema({
     sensors:[String], /*Name of the sensors connected to this monitor (the user is the one who says which sensors are connected) */
     //Note: status in sensors can be "ok" if everything is in order, "warning" if the sensor is live but the reading is out of bounds, 
     //"false" if the sensor is down
-    aTemp:{nameText:{type:String, default:''}, nameIcon:{type:String, default:'fa fa-thermometer-half'},
+    aTemp:{
+        nameText:{type:String, default:''}, nameIcon:{type:String, default:'fa fa-thermometer-half'},
         status: String, lastReading:Number, lastDate:Number, lBound:Number, uBound:Number,
         unit:{type:String, default:'°C'}
     }, 
-    rh:{nameText:{type:String, default:'%'}, nameIcon:{type:String, default:'fa fa-tint'}, 
+    rh:{
+        nameText:{type:String, default:'%'}, nameIcon:{type:String, default:'fa fa-tint'}, 
         status: String, lastReading:Number, lastDate:Number, lBound:Number, uBound:Number,
         unit:{type:String, default:'%'}
     },
-    co2:{nameText:{type:String, default:'CO2'}, nameIcon:{type:String, default:''},
+    co2:{
+        nameText:{type:String, default:'CO2'}, nameIcon:{type:String, default:''},
         status: String, lastReading:Number, lastDate:Number, lBound:Number, uBound:Number,
         unit:{type:String, default:'ppm'}
     },
-    lux:{nameText:{type:String, default:''}, nameIcon:{type:String, default:'fa fa-lightbulb-o'},
+    lux:{
+        nameText:{type:String, default:''}, nameIcon:{type:String, default:'fa fa-lightbulb-o'},
         status: String, lastReading:Number, lastDate:Number, lBound:Number, uBound:Number,
         unit:{type:String, default:'lux'}
     },
-    ph:{nameText:{type:String, default:'pH'}, nameIcon:{type:String, default:''},
+    ph:{
+        nameText:{type:String, default:'pH'}, nameIcon:{type:String, default:''},
         status: String, lastReading:Number, lastDate:Number, lBound:Number, uBound:Number, cal4:Date, cal7:Date, cal10:Date,
         unit:{type:String, default:''}
     },
-    ec:{nameText:{type:String, default:'EC'}, nameIcon:{type:String, default:''},
+    ec:{
+        nameText:{type:String, default:'EC'}, nameIcon:{type:String, default:''},
         status: String, lastReading:Number, lastDate:Number, lBound:Number, uBound:Number,
         unit:{type:String, default:'mS'}
     },
-    do:{nameText:{type:String, default:'DO'}, nameIcon:{type:String, default:''},
+    do:{
+        nameText:{type:String, default:'DO'}, nameIcon:{type:String, default:''},
         status: String, lastReading:Number, lastDate:Number, lBound:Number, uBound:Number,
         unit:{type:String, default:'ppm'}
     },
-    wTemp:{nameText:{type:String, default:''}, nameIcon:{type:String, default:'fa fa-thermometer-half'},
+    wTemp:{
+        nameText:{type:String, default:''}, nameIcon:{type:String, default:'fa fa-thermometer-half'},
         status: String, lastReading:Number, lastDate:Number, lBound:Number, uBound:Number,
         unit:{type:String, default:'°C'}
     },
