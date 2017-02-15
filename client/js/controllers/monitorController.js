@@ -4,6 +4,12 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
     $scope.monitorNameEdit=false;
     $scope.newMonitorName="";
     $scope.monitorSettings=false;
+    $scope.availableSensors=SensorService.sensors;
+    $scope.newSensor='';
+    
+    $scope.availableSensors = $scope.availableSensors.filter(function(el){
+      return !$scope.monitor.sensors.includes(el);
+    });
     
     //Monitor Sensor Settings
     $scope.units=[];
@@ -82,7 +88,8 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
         $scope.newSensorUnit=null;
         $scope.newUBound=null;
         $scope.newLBound=null;
-    };
+        $scope.newSensor='';
+    }; 
     
     
     /*

@@ -4,7 +4,7 @@ myApp.factory('SensorService',
     var sensorUnits= {
         aTemp:['°C','°F'],
         wTemp:['°C','°F'],
-        lux:['lux'],
+        lux:['lux','fc'],
         ec:['mS'],
         ph:[''],
         rh:['%'],
@@ -21,12 +21,17 @@ myApp.factory('SensorService',
     function getConvertedReading(sensor,unit,reading){
         if(sensor=='aTemp'){
             if(unit=='°F'){
-                reading=Math.round((reading-32)*(5/9));
+                reading=Math.round((reading*(9/5))+32);
             }
         }
         if(sensor=='wTemp'){
             if(unit=='°F'){
                 reading=(reading.reading-32)*(5/9);
+            }
+        }
+        if(sensor=='lux'){
+            if(unit=='fc'){
+                reading=Math.round(reading*0.09290304);
             }
         }
         return reading;

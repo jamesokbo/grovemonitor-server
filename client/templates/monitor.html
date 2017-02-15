@@ -60,7 +60,7 @@
             </li>
             
         </ul>
-        <div class="tab-content monitorSettingsContent col-md-9 col-sm-9 col-xs-8">
+        <div class="tab-content monitorSettingsContent col-md-9 col-sm-8 col-xs-8">
             <div class="tab-pane active" ng-attr-id="{{'generalSettings'+monitor.monitorID}}">
                 <span class="col-md-offset-6 col-sm-offset-6 col-xs-offset-6 settingsTitle"><i class="fa fa-cog"></i></span>
                 <table class="settingsTable" width="100%">
@@ -74,6 +74,20 @@
                             <i class="fa fa-pencil-square-o editButton" ng-hide='monitorNameEdit || !monitor.status' ng-click='toggleMonitorNameEdit()'></i>
                             <i class="fa fa-check editButton" ng-hide='!monitorNameEdit' ng-click='editMonitorName({monitorID:monitor.monitorID,newName:newMonitorName}); deactivateEdit()'></i>
                             <i class="fa fa-times editButton" ng-hide='!monitorNameEdit' ng-click='deactivateEdit()'></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Add Sensor:</strong></td>
+                        <td>
+                            <select class="form-control" id="sensorSelect" ng-model="newSensor">
+                                <option ng-repeat="sensor in availableSensors" value='{{sensor}}'> 
+                                    <!-- TODO: Show these options as icons, not the sensor keyword https://github.com/FortAwesome/Font-Awesome/issues/996 -->
+                                    <span>{{sensor}}</span>
+                                </option>
+                            </select>
+                        </td>
+                        <td><i class="fa fa-plus-square editButton" ng-hide="newSensor==''"
+                            ng-click='editMonitorName({monitorID:monitor.monitorID,newName:newMonitorName}); deactivateEdit()'></i>
                         </td>
                     </tr>
                 </table>
