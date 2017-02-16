@@ -8,5 +8,5 @@ module.exports={
     s007: Error('s007: Unidentified monitor'),
     s008: Error('s008: Monitor was not registered as connected'),
     s009: Error('s009: new boundarie Out of Bounds'),
-    s010: Error('s010: LowerBound must be smaller than UpperBound and viceversa')
+    s010: Error('s010: LowerBound must be smaller than UpperBound')
 };

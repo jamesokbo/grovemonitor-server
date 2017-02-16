@@ -8,17 +8,38 @@ var upperBoundaries=require('../../../upperBoundaries.js');
 
 module.exports=function(socket){
     socket.on('editUBound',function(data,fn){
-        console.log("updating upper bound");
          Monitor.find({monitorID:data.monitorID},function(err,docs){
             if(err){
                 throw err;
             }
             if(docs.length!=0){
-                if(Number(data.newUBound)>lowerBoundaries[data.type] && data.newUBound<upperBoundaries[data.type]){
-                    console.log(docs[0][data.type].lBound +"<"+ data.newUBound);
-                    if(docs[0][data.type].lBound<data.newUBound){
-                        //TODO: set the boundary on the monitor first
-                        var uBoundString=data.type+'.UBound';
+                if(data.newUBound>lowerBoundaries[data.sensor] && data.newUBound<upperBoundaries[data.sensor]){
+                    if(docs[0][data.sensor].lBound<data.newUBound){
+                        /*TODO: set the boundary on the monitor first, test and move to uBound
+                        mainRPiIndex=mainRPiArrays.mainRPiIDs.indexOf(docs[0].mainRPiID);
+                        if(mainRPiIndex!=-1){
+                            mainRPiArrays.mainRPis[mainRPiIndex].emit('editUBound',data,function(res,err){
+                                if(err){
+                                    fn(null,err);
+                                }
+                                if(res.status){
+                                    var uBoundString=data.sensor+'.uBound';
+                                    var setUBound={};
+                                    setUBound[uBoundString]=Number(data.newUBound);
+                                    Monitor.update({_id:data.monitorID},
+                                    {$set:setUBound},function(err,doc){
+                                        if(err){
+                                            throw err;
+                                        }
+                                        console.log(doc);
+                                        fn({status:true});
+                                    });
+                                }
+                            });
+                        }
+                        */
+                        //TODO:borrar esto
+                        var uBoundString=data.sensor+'.uBound';
                         var setUBound={};
                         setUBound[uBoundString]=Number(data.newUBound);
                         Monitor.update({_id:data.monitorID},
@@ -26,20 +47,20 @@ module.exports=function(socket){
                             if(err){
                                 throw err;
                             }
-                            console.log(doc);
                             fn({status:true});
-                        });    
+                        });  
+                        //hasta aquí
                     }
                     else{
-                        fn(null,errors.s010);
+                        fn(null,errors.s010.toString());
                     }
                 }
                 else{
-                    fn(null,errors.s009);
+                    fn(null,errors.s009.toString());
                 }
             }
             else{
-                fn(null,errors.s007);
+                fn(null,errors.s007.toString());
             }
         });
     });

@@ -8,15 +8,13 @@ var upperBoundaries=require('../../../upperBoundaries.js');
 
 module.exports=function(socket){
     socket.on('editLBound',function(data,fn){
-        console.log("updating lower bound");
          Monitor.find({monitorID:data.monitorID},function(err,docs){
             if(err){
                 throw err;
             }
             if(docs.length!=0){
-                if(Number(data.newLBound)>lowerBoundaries[data.type] && data.newLBound<upperBoundaries[data.type]){
-                    console.log(docs[0][data.type].uBound +">"+ data.newLBound);
-                    if(docs[0][data.type].uBound>data.newLBound){
+                if(Number(data.newLBound)>lowerBoundaries[data.sensor] && data.newLBound<upperBoundaries[data.sensor]){
+                    if(docs[0][data.sensor].uBound>data.newLBound){
                         /*TODO: set the boundary on the monitor first, test and move to uBound
                         mainRPiIndex=mainRPiArrays.mainRPiIDs.indexOf(docs[0].mainRPiID);
                         if(mainRPiIndex!=-1){
@@ -25,7 +23,7 @@ module.exports=function(socket){
                                     fn(null,err);
                                 }
                                 if(res.status){
-                                    var lBoundString=data.type+'.lBound';
+                                    var lBoundString=data.sensor+'.lBound';
                                     var setLBound={};
                                     setLBound[lBoundString]=Number(data.newLBound);
                                     Monitor.update({_id:data.monitorID},
@@ -41,7 +39,7 @@ module.exports=function(socket){
                         }
                         */
                         //TODO:borrar esto
-                        var lBoundString=data.type+'.lBound';
+                        var lBoundString=data.sensor+'.lBound';
                         var setLBound={};
                         setLBound[lBoundString]=Number(data.newLBound);
                         Monitor.update({_id:data.monitorID},
@@ -49,21 +47,20 @@ module.exports=function(socket){
                             if(err){
                                 throw err;
                             }
-                            console.log(doc);
                             fn({status:true});
                         });  
                         //hasta aquí
                     }
                     else{
-                        fn(null,errors.s010);
+                        fn(null,errors.s010.toString());
                     }
                 }
                 else{
-                    fn(null,errors.s009);
+                    fn(null,errors.s009.toString());
                 }
             }
             else{
-                fn(null,errors.s007);
+                fn(null,errors.s007.toString());
             }
         });
     });

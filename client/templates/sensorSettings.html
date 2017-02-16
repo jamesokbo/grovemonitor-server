@@ -23,27 +23,28 @@
     <tr>
         <td><strong>Lower Bound:</strong></td>
         <td>
-            <span ng-hide='lBoundEdit'>{{monitor[sensor].lBound}}</span>
-            <input type='text' placeholder='{{monitor[sensor].lBound}}' ng-hide='!lBoundEdit' ng-model="newLBound"></input>
+            <span ng-hide='lBoundEdit'>{{getConvertedReading(sensor,monitor[sensor].unit,monitor[sensor].lBound)}}</span>
+            <input type='text' placeholder='{{getConvertedReading(sensor,monitor[sensor].unit,monitor[sensor].lBound)}}' ng-hide='!lBoundEdit' ng-model="settings.newLBound"></input>
         </td>
         <td>
             <i class="fa fa-pencil-square-o editButton" ng-hide='lBoundEdit || !monitor.status' 
             ng-click='toggleLBoundEdit()'></i> 
-            <i class="fa fa-check editButton" ng-hide='!lBoundEdit' 
-            ng-click="editLBound({'monitorID':monitor.monitorID, 'newLBound':newLBound,'type':sensor})"></i>
+            <i class="fa fa-check editButton" ng-hide='!lBoundEdit'
+            ng-click="editLBound(sensor)"></i>
             <i class="fa fa-times editButton" ng-hide='!lBoundEdit' ng-click='deactivateEdit()'></i>
         </td>
     </tr>
     <tr>
         <td><strong>Upper Bound:</strong></td>
         <td>
-            <span ng-hide='uBoundEdit'>{{monitor[sensor].uBound}}</span>
-            <input type='text' placeholder='{{monitor[sensor].uBound}}' ng-hide='!uBoundEdit' ng-model="newUBound"></input>
+            <span ng-hide='uBoundEdit'>{{getConvertedReading(sensor,monitor[sensor].unit,monitor[sensor].uBound)}}</span>
+            <input type='text' placeholder='{{getConvertedReading(sensor,monitor[sensor].unit,monitor[sensor].uBound)}}' 
+            ng-hide='!uBoundEdit' ng-model="settings.newUBound"></input>
         </td>
         <td>
             <i class="fa fa-pencil-square-o editButton" ng-hide='uBoundEdit || !monitor.status' ng-click='toggleUBoundEdit()'></i>
             <i class="fa fa-check editButton" ng-hide='!uBoundEdit' 
-            ng-click="editUBound({'monitorID':monitor.monitorID,'newUBound':newUBound,'type':sensor})"></i>
+            ng-click="editUBound(sensor)"></i>
             <i class="fa fa-times editButton" ng-hide='!uBoundEdit' ng-click='deactivateEdit()'></i>
         </td>
     </tr>

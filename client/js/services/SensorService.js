@@ -36,11 +36,30 @@ myApp.factory('SensorService',
         }
         return reading;
     }
+    function getReadingInStandardUnit(sensor,unit,reading){
+        if(sensor=='aTemp'){
+            if(unit=='°F'){
+                reading=Math.round((reading-32)*(5/9));
+            }
+        }
+        if(sensor=='wTemp'){
+            if(unit=='°F'){
+                reading=Math.round((reading-32)*(5/9));
+            }
+        }
+        if(sensor=='lux'){
+            if(unit=='fc'){
+                reading=Math.round(reading/0.09290304);
+            }
+        }
+        return reading;
+    }
     
     // return available functions for use in the controllers
     return ({
         getSensorUnits:getSensorUnits,
         sensors:sensors,
-        getConvertedReading:getConvertedReading
+        getConvertedReading:getConvertedReading,
+        getReadingInStandardUnit:getReadingInStandardUnit
     });
 }]);

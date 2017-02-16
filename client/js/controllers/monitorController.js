@@ -16,8 +16,9 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
     $scope.sensorUnitEdit=false;
     $scope.lBoundEdit=false;
     $scope.uBoundEdit=false;
-    $scope.newLBound;
-    $scope.newUBound;
+    $scope.settings={};
+    $scope.settings.newLBound=null;
+    $scope.settings.newUBound=null;
     
     //Functions
     $scope.loadMonitor=function(monitorID,fn){
@@ -86,8 +87,8 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
         $scope.lBoundEdit=false;
         $scope.uBoundEdit=false;
         $scope.newSensorUnit=null;
-        $scope.newUBound=null;
-        $scope.newLBound=null;
+        $scope.settings.newLBound=null;
+        $scope.settings.newLBound=null;
         $scope.newSensor='';
     }; 
     
@@ -116,6 +117,9 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
     $scope.getConvertedReading=function(sensor,unit,reading){
         return SensorService.getConvertedReading(sensor,unit,reading);
     };
+    $scope.getReadingInStandardUnit=function(sensor,reading){
+        return SensorService.getReadingInStandardUnit(sensor,$scope.monitor[sensor].unit,reading);
+    };
     $scope.editSensorUnit=function(sensor,newUnit){
         console.log('editing sensor unit');
         var data={
@@ -136,32 +140,55 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
             });
         });
     };
-    /*
-    $scope.editLBound=function(data){
-        Socket.emit('editLBound',data,function(response,err){
+    $scope.editLBound=function(sensor){
+        var newLBound= $scope.getReadingInStandardUnit(sensor,$scope.settings.newLBound);
+        var data={
+            monitorID:$scope.monitor.monitorID,
+            sensor:sensor,
+            newLBound:newLBound
+        };
+        Socket.emit('editLBound',data,function(res, err) {
             if(err){
-                throw err;
+                console.log(err);
             }
-            if(response.status){
-                //TODO: place the new boundary without loading the monitor
-                $scope.monitors[$scope.monitorIDs.indexOf(data.monitorID)][data.type].lBound=data.newLBound;
-                $scope.deactivateEdit();
+            else{
+                if(res.status){
+                    $scope.loadMonitor($scope.monitor.monitorID,function(res,err){
+                        if(err){
+                            console.log(err);
+                        }
+                        $scope.monitor=res;
+                        $scope.deactivateEdit();
+                    });
+                }
+            }
+            
+        });
+    };
+    $scope.editUBound=function(sensor){
+        var newUBound= $scope.getReadingInStandardUnit(sensor,$scope.settings.newUBound);
+        var data={
+            monitorID:$scope.monitor.monitorID,
+            sensor:sensor,
+            newUBound:newUBound
+        };
+        Socket.emit('editUBound',data,function(res, err) {
+            if(err){
+                console.log(err);
+            }
+            else{
+                if(res.status){
+                    $scope.loadMonitor($scope.monitor.monitorID,function(res,err){
+                        if(err){
+                            console.log(err);
+                        }
+                        $scope.monitor=res;
+                        $scope.deactivateEdit();
+                    });
+                }
             }
         });
     };
-    $scope.editUBound=function(data){
-        Socket.emit('editUBound',data,function(response,err){
-            if(err){
-                throw err;
-            }
-            if(response.status){
-                //TODO: place the new boundary without loading the monitor
-                $scope.monitors[$scope.monitorIDs.indexOf(data.monitorID)][data.type].uBound=data.newUBound;
-                $scope.deactivateEdit();
-            }
-        });
-    };
-    */
     $scope.mReading= function(data){
         Socket.emit('mReading',data,function(res,err){
             if(err){
