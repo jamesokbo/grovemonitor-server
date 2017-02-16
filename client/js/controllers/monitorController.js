@@ -93,22 +93,23 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
     }; 
     
     
-    /*
-    $scope.editMonitorName=function(data){
-      if(data.newName!=""){
-        Socket.emit('editMonitorName',data,function(response,err){
-            if(err){
-                throw err;
-            }
-            if(response.status){
-                //TODO: Load the individual monitor
-                $scope.monitors[$scope.monitorIDs.indexOf(data.monitorID)].name=data.newName;
-                $scope.deactivateEdit();
-            }
-        });
-      }  
+    $scope.editMonitorName=function(){
+        var data={
+            newMonitorName:$scope.newMonitorName
+        };
+        if($scope.newMonitorName!=""){
+            Socket.emit('editMonitorName',data,function(response,err){
+                if(err){
+                    throw err;
+                }
+                if(response.status){
+                    //TODO: Load the individual monitor
+                    $scope.monitors[$scope.monitorIDs.indexOf(data.monitorID)].name=data.newName;
+                    $scope.deactivateEdit();
+                }
+            });
+        }  
     };
-    */
     $scope.getSensorUnits=function(sensor){
         SensorService.getSensorUnits(sensor,function(units){
             $scope.units=units;
@@ -121,7 +122,6 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
         return SensorService.getReadingInStandardUnit(sensor,$scope.monitor[sensor].unit,reading);
     };
     $scope.editSensorUnit=function(sensor,newUnit){
-        console.log('editing sensor unit');
         var data={
             monitorID:$scope.monitor.monitorID,
             sensor:sensor,
@@ -199,6 +199,4 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
             $scope.monitor[data.sensor].status=res.status;
         });
     };
-    
-    console.log('instantiated monitorController');
 }]);

@@ -10,7 +10,6 @@ module.exports=function(socket){
             if(err){
                 throw err;
             }
-            console.log(res);
             if(res.ok==1 && res.nModified==1){
                 fn({status:true});
             }
@@ -18,7 +17,5 @@ module.exports=function(socket){
                 fn(errors.s007);
             }
         });
-        
     });
-    
 };

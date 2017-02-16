@@ -4,7 +4,6 @@ var errors=require('../../../errors.js');
 
 module.exports=function(socket){
     socket.on('deleteMainRPi',function(data,fn){
-        console.log('deleting mainRPi');
         //TODO: this should be a part of the callback, after the mainRPis UserID and name are deleted physically
         MainRPi.update({mainRPiID:mongoose.Types.ObjectId(data.mainRPiID), userID:data.userID},
         {$set:{userID:"",name:""}},function(err,res){
