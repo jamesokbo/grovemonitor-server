@@ -55,6 +55,10 @@ var User=require('./server/models/user');
 //Monitor arrays
 var mainRPiArrays=require('./server/mainRPiArrays.js');
 
+//TEST TO INSTANTIATE MONITOR EXAMPLE
+//var monitor=new Monitor();
+//monitor.save();
+
 
 //Configuración de passport para autentificación de usuario
 passport.use(new localStrategy(User.authenticate()));
@@ -110,12 +114,12 @@ io.on('connection', function(socket){
   //Request manual sensor reading
   require('./server/userSocketEvents/monitorEvents/monitorFunctionalEvents/mReading.js')(socket);
   //--monitorSettingsEvents
-  //Cambiar tamaño de reservoir
-  require('./server/userSocketEvents/monitorEvents/monitorSettingsEvents/editReservoirSize.js')(socket);
   //Edit LowerBound of any sensor
   require('./server/userSocketEvents/monitorEvents/monitorSettingsEvents/editLBound.js')(socket);
   //Edit UpperBound of any sensor
   require('./server/userSocketEvents/monitorEvents/monitorSettingsEvents/editUBound.js')(socket);
+  //Edit CalibrationPoint of any sensor
+  require('./server/userSocketEvents/monitorEvents/monitorSettingsEvents/editCalibration.js')(socket);
   //Edit MonitorName
   require('./server/userSocketEvents/monitorEvents/monitorSettingsEvents/editMonitorName.js')(socket);
   //Edit sensorUnit

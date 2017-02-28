@@ -1,5 +1,4 @@
 myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', function MonitorController($scope, Socket, SensorService) {
-    
     //Monitor General Settings
     $scope.monitorNameEdit=false;
     $scope.newMonitorName="";
@@ -16,9 +15,17 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
     $scope.sensorUnitEdit=false;
     $scope.lBoundEdit=false;
     $scope.uBoundEdit=false;
+    $scope.calibrationEdit=false;
     $scope.settings={};
     $scope.settings.newLBound=null;
     $scope.settings.newUBound=null;
+    $scope.settings.newCalibration=null;
+    
+    //Calibration Settings
+    $scope.calibrationPoint='firstPoint';
+    $scope.calibrationValue;
+    $scope.calibrationDate;
+    $scope.calibrationOptions=[];
     
     //Functions
     $scope.loadMonitor=function(monitorID,fn){
@@ -28,13 +35,19 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
            }
            else{
                fn(res);
+               $scope.setCalibrationData()
            }
         });
     };
-    $scope.initiateMonitor=function(monitor){
-      for(var i=0; i<monitor.sensors.length; i++){
-          
-      }  
+    $scope.setCalibrationData=function(sensor, calibrationPoint){
+        $scope.deactivateEdit();
+        $scope.calibrationPoint=calibrationPoint;
+        $scope.calibrationValue=SensorService.getConvertedReading(sensor,
+        $scope.monitor[sensor].unit,$scope.monitor[sensor].calibration[calibrationPoint].value);
+        $scope.calibrationDate=$scope.monitor[sensor].calibration[calibrationPoint].date;
+        SensorService.getCalibrationOptions(sensor,function(data){
+            $scope.calibrationOptions=data;
+        });
     };
     
     $scope.toggleMonitorSettings=function(){
@@ -81,31 +94,49 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
             $scope.uBoundEdit=true;
         }
     };
+    $scope.toggleCalibrationEdit=function(){
+        $scope.deactivateEdit();
+        if($scope.calibrationEdit){
+            $scope.calibrationEdit=false;
+        }
+        else{
+            $scope.calibrationEdit=true;
+        }
+    };
     $scope.deactivateEdit=function(){
         $scope.monitorNameEdit=false;
         $scope.sensorUnitEdit=false;
+        $scope.newMonitorName='';
         $scope.lBoundEdit=false;
         $scope.uBoundEdit=false;
+        $scope.calibrationEdit=false;
         $scope.newSensorUnit=null;
         $scope.settings.newLBound=null;
         $scope.settings.newLBound=null;
+        $scope.settings.newCalibration=null;
         $scope.newSensor='';
+        
     }; 
     
-    
     $scope.editMonitorName=function(){
-        var data={
-            newMonitorName:$scope.newMonitorName
-        };
         if($scope.newMonitorName!=""){
+            var data={
+                monitorID:$scope.monitor.monitorID,
+                newMonitorName:$scope.newMonitorName
+            };
             Socket.emit('editMonitorName',data,function(response,err){
                 if(err){
-                    throw err;
+                    console.log(err);
                 }
                 if(response.status){
                     //TODO: Load the individual monitor
-                    $scope.monitors[$scope.monitorIDs.indexOf(data.monitorID)].name=data.newName;
-                    $scope.deactivateEdit();
+                    $scope.loadMonitor($scope.monitor.monitorID,function(res,err){
+                        if(err){
+                            console.log(err);
+                        }
+                        $scope.monitor=res;
+                        $scope.deactivateEdit();
+                    });
                 }
             });
         }  
@@ -136,6 +167,7 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
                     console.log(err);
                 }
                 $scope.monitor=res;
+                $scope.setCalibrationData(sensor,'firstPoint');
                 $scope.deactivateEdit();
             });
         });
@@ -187,6 +219,34 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
                     });
                 }
             }
+        });
+    };
+    $scope.editCalibration=function(sensor){
+        var newCalibration= $scope.getReadingInStandardUnit(sensor,$scope.settings.newCalibration);
+        var data={
+            monitorID:$scope.monitor.monitorID,
+            sensor:sensor,
+            calibrationPoint:$scope.calibrationPoint,
+            newCalibration:newCalibration,
+            date:Date.now()
+        };
+        Socket.emit('editCalibration',data,function(res, err) {
+            if(err){
+                console.log(err);
+            }
+            else{
+                if(res.status){
+                    $scope.loadMonitor($scope.monitor.monitorID,function(res,err){
+                        if(err){
+                            console.log(err);
+                        }
+                        $scope.monitor=res;
+                        $scope.setCalibrationData(sensor,$scope.calibrationPoint);
+                        $scope.deactivateEdit();
+                    });
+                }
+            }
+            
         });
     };
     $scope.mReading= function(data){

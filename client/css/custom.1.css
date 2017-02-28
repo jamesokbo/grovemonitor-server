@@ -271,7 +271,19 @@ input[type="Password"]{
 .settingsTitle{
     font-size: 150%;
 }
+.calibrationTitle{
+    padding-top:3%;
+    padding-bottom:1%;
+    font-size: 120%;
+    font-weight: bold;
+}
 .settingsTable{
+    table-layout: fixed;
+    text-align: center;
+}
+.calibrationTable{
+    border-spacing: 5px;
+    border-collapse: separate;
     table-layout: fixed;
     text-align: center;
 }
@@ -281,16 +293,45 @@ input[type="Password"]{
     color:#b3e6cc;
     border: 0px solid #4d1933;
 }
+.calibrationTable input{
+    text-align: center;
+    background-color: #4d1933;
+    color:#b3e6cc;
+    border: 0px solid #4d1933;
+}
+.calibrationUnit{
+    width:30%;
+}
+.calibrationValue{
+    width:30%;
+}
+
 .editButton{
     border-radius:2px;
     padding: 5px;
 }
+
 .editButton:hover,
-.editButton:focus{
+.editButton:focus,
+.editButton:active,
+.editButton.active{
     cursor:pointer;
     color:#4d1933;
     background-color:#b3e6cc;
 }
+.calibrationPointButton{
+    border-radius:2px;
+    padding: 3px;
+}
+.calibrationPointButton:hover,
+.calibrationPointButton:focus,
+.calibrationPointButton:active,
+.calibrationPointButton.active{
+    cursor:pointer;
+    color:#4d1933;
+    background-color:#b3e6cc;
+}
+
 .monitor-content{
     overflow-y: auto; /*define la altura en automático*/
     margin-top: 10px;

@@ -12,25 +12,25 @@
         </div>
     </div>
     <div ng-show="!monitorSettings">
-        <ul class="nav nav-pills nav-stacked col-md-2 col-sm-3 col-xs-4">
+        <ul class="nav nav-pills nav-stacked col-md-2 col-sm-2 col-xs-3">
             <li class="active"><a data-toggle="tab" ng-attr-data-target="{{'#now'+monitor.monitorID}}"><strong>Now</strong></a></li>
             <li><a data-toggle="tab" ng-attr-data-target="{{'#historic'+monitor.monitorID}}"><i class="fa fa-line-chart"></i></a></li>
         </ul>
-        <div class="tab-content activeMonitor-content col-md-9 col-sm-8 col-xs-8">
+        <div class="tab-content activeMonitor-content col-md-9 col-sm-9 col-xs-9">
             <div class="tab-pane active" ng-attr-id="{{'now'+monitor.monitorID}}">
                 <sensor ng-repeat='sensor in monitor.sensors'></sensor>
             </div>
             <div class="tab-pane fade" ng-attr-id="{{'historic'+monitor.monitorID}}">
                 <form ng-attr-id="{{'historic-form'+monitor.monitorID}}">
-                    <div class="form-group col-md-4 col-sm-3 col-xs-3">
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
                         <label class='historicForm-title' for="fromDate">Start Date</label>
-                    <input type="date" class="form-control" ng-attr-id="{{'fromDate'+monitor.monitorID}}" ng-model="historicForm[monitor.monitorID].fromDate">
+                        <input type="date" class="form-control" ng-attr-id="{{'fromDate'+monitor.monitorID}}" ng-model="historicForm[monitor.monitorID].fromDate">
                     </div>
-                    <div class="form-group col-md-4 col-sm-3 col-xs-3">
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
                         <label class='historicForm-title' for="toDate">End Date</label>
                         <input type="date" class="form-control" ng-attr-id="{{'toDate'+monitor.monitorID}}" ng-model="historicForm[monitor.monitorID].toDate">
                     </div>
-                    <div class="form-group col-md-2 col-sm-2 col-xs-2">
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
                         <label class='historicForm-title' for="sensorSelect">Sensor</label>
                         <select class="form-control" id="sensorSelect" ng-model="historicForm[monitor.monitorID].type">
                             <option ng-repeat="sensor in monitor.sensors" value='{{sensor}}'> 
@@ -39,7 +39,7 @@
                             </option>
                         </select>
                     </div>
-                    <div class="form-group col-md-1 col-sm-1 col-xs-1 graph-button">
+                    <div class="form-group col-md-6 col-sm-6 col-xs-3 graph-button">
                         <button type="submit" class="btn btn-success" ng-click="historicReadings(monitor.monitorID)">Graph</button>
                     </div>
                 </form>
@@ -48,19 +48,19 @@
         </div>
     </div>
     <div ng-show="monitorSettings">
-        <ul class="nav nav-pills nav-stacked col-md-2 col-sm-3 col-xs-4">
+        <ul class="nav nav-pills nav-stacked col-md-2 col-sm-2 col-xs-3">
             <li class="active"><a data-toggle="tab" ng-attr-data-target="{{'#generalSettings'+monitor.monitorID}}" 
             ng-click="deactivateEdit()">
                 <strong>General</strong></a>
             </li>
             <li ng-repeat="sensor in monitor.sensors">
-                <a data-toggle="tab" ng-attr-data-target="{{'#'+sensor+monitor.monitorID}}" ng-click="deactivateEdit()">
+                <a data-toggle="tab" ng-attr-data-target="{{'#'+sensor+monitor.monitorID}}" ng-click="deactivateEdit();setCalibrationData(sensor,'firstPoint')">
                     <strong><i ng-class="monitor[sensor].nameIcon"></i><span>{{monitor[sensor].nameText}}</span></strong>
                 </a>
             </li>
             
         </ul>
-        <div class="tab-content monitorSettingsContent col-md-9 col-sm-8 col-xs-8">
+        <div class="tab-content monitorSettingsContent col-md-9 col-sm-9 col-xs-9">
             <div class="tab-pane active" ng-attr-id="{{'generalSettings'+monitor.monitorID}}">
                 <span class="col-md-offset-6 col-sm-offset-6 col-xs-offset-6 settingsTitle"><i class="fa fa-cog"></i></span>
                 <table class="settingsTable" width="100%">
@@ -72,7 +72,7 @@
                         </td>
                         <td>
                             <i class="fa fa-pencil-square-o editButton" ng-hide='monitorNameEdit || !monitor.status' ng-click='toggleMonitorNameEdit()'></i>
-                            <i class="fa fa-check editButton" ng-hide='!monitorNameEdit' ng-click='editMonitorName({monitorID:monitor.monitorID,newName:newMonitorName}); deactivateEdit()'></i>
+                            <i class="fa fa-check editButton" ng-hide='!monitorNameEdit' ng-click='editMonitorName(); deactivateEdit()'></i>
                             <i class="fa fa-times editButton" ng-hide='!monitorNameEdit' ng-click='deactivateEdit()'></i>
                         </td>
                     </tr>

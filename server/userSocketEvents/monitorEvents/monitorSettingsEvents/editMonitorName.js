@@ -13,7 +13,7 @@ module.exports=function(socket){
             }
             if(docs.length!=0){
                 Monitor.update({_id:data.monitorID},
-                {$set:{name:data.newName}},function(err,doc){
+                {$set:{name:data.newMonitorName}},function(err,doc){
                     if(err){
                         throw err;
                     }
@@ -22,7 +22,7 @@ module.exports=function(socket){
                 });
             }
             else{
-                fn(null,errors.s007);
+                fn(null,errors.s007.toString());
             }
         });
     });

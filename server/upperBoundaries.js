@@ -1,4 +1,9 @@
 module.exports={
     aTemp:100,
-    rh:100
+    wTemp:100,
+    rh:100,
+    lux:100000,
+    do:1000000,
+    ph:14,
+    co2:100000
 };
