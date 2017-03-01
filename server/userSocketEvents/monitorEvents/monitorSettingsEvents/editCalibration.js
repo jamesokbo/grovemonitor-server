@@ -24,27 +24,27 @@ module.exports=function(socket){
                                 if(err){
                                     fn(err);
                                 }
-                                if(res.status){
-                                    var newCalString=data.sensor+'.calibration.'+data.calibrationPoint+'.value';
-                                    var newCalDate=data.sensor+'.calibration.'+data.calibrationPoint+'.date';
-                                    var setNewCal={};
-                                    setNewCal[newCalString]=Number(data.newCalibration);
-                                    setNewCal[newCalDate]=Date.now();
-                                    Monitor.update({_id:data.monitorID},
-                                    {$set:setNewCal},function(err,doc){
-                                        if(err){
-                                            throw err;
-                                        }
-                                        fn(null,{status:true});
-                                    });  
+                                else{
+                                    if(res.status){
+                                        var newCalString=data.sensor+'.calibration.'+data.calibrationPoint+'.value';
+                                        var newCalDate=data.sensor+'.calibration.'+data.calibrationPoint+'.date';
+                                        var setNewCal={};
+                                        setNewCal[newCalString]=Number(data.newCalibration);
+                                        setNewCal[newCalDate]=Date.now();
+                                        Monitor.update({_id:data.monitorID},
+                                        {$set:setNewCal},function(err,doc){
+                                            if(err){
+                                                throw err;
+                                            }
+                                            fn(null,{status:true});
+                                        });  
+                                    }    
                                 }
                             }));
                         }
                         else{
                             fn(errors.s008.toString());        
                         }
-                    //TODO:borrar esto
-                    //hasta aquí
                 }
                 else{
                     fn(errors.s009.toString());
