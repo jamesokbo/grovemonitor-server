@@ -29,7 +29,7 @@ function MainRPiController($scope, Socket, SensorService) {
     };
     $scope.loadMonitor=function(monitorID){
         var newMonitor;
-        Socket.emit('loadMonitor',{monitorID:monitorID},function(res,err) {
+        Socket.emit('loadMonitor',{monitorID:monitorID},function(err,res) {
            if(err){
                throw err;
             }
@@ -47,7 +47,7 @@ function MainRPiController($scope, Socket, SensorService) {
         $scope.monitors=[];
         $scope.monitorIDs=[];
 
-        Socket.emit('loadMonitors',{mainRPiID:$scope.mainRPi.mainRPiID},function(res,err){
+        Socket.emit('loadMonitors',{mainRPiID:$scope.mainRPi.mainRPiID},function(err,res){
             if(err){
                 throw err;
             }

@@ -245,7 +245,7 @@ myApp.controller('monitorapiController', ['$scope', 'Socket', 'AuthService', fun
     };
     //Volver a cargar un solo monitor, puede ser porque se cambiaron algunas preferencias de este
     $scope.loadMonitor=function(index){
-        Socket.emit('loadMonitor',{monitorID:$scope.monitors[index]._id, userID:$scope.user._id},function(response,err){
+        Socket.emit('loadMonitor',{monitorID:$scope.monitors[index]._id, userID:$scope.user._id},function(err,response){
             if(err){
                 throw err;
             }
@@ -257,7 +257,7 @@ myApp.controller('monitorapiController', ['$scope', 'Socket', 'AuthService', fun
     //Cargar todos los monitores asociados a un usuario
     $scope.loadMonitors = function(userID){
         if(userID!=''){
-            Socket.emit('loadMonitors', {userID:userID}, function(response, err) {
+            Socket.emit('loadMonitors', {userID:userID}, function(err,response) {
                 console.log("recibidos monitores "+response);
                 if(err){
                     throw err;

@@ -45,7 +45,7 @@ myApp.controller('mainRPiApiController', ['$scope', 'Socket', 'AuthService', fun
     //Cargar todos los mainRPies asociados a un usuario
     $scope.loadMainRPis = function(userID,fn){
         if(userID!=''){
-            Socket.emit('loadMainRPis', {userID:userID}, function(response, err) {
+            Socket.emit('loadMainRPis', {userID:userID}, function(err, response) {
                 if(err){
                     throw err;
                 }
@@ -61,7 +61,7 @@ myApp.controller('mainRPiApiController', ['$scope', 'Socket', 'AuthService', fun
     $scope.editMainRPiName=function(id, newName){
       if(newName!=""){
         console.log('editing name');
-        Socket.emit('editMainRPiName',{mainRPiID:id, newName:newName},function(response,err){
+        Socket.emit('editMainRPiName',{mainRPiID:id, newName:newName},function(err,response){
             if(err){
                 throw err;
             }
@@ -75,7 +75,7 @@ myApp.controller('mainRPiApiController', ['$scope', 'Socket', 'AuthService', fun
     $scope.deleteMainRPi=function(id){
         bootbox.confirm("Are you sure you want to delete this monitor? Deleting this monitor will cause all of its historical records to be deleted...", function(ans){
             if(ans){
-                Socket.emit('deleteMainRPi', {mainRPiID:id, userID:$scope.user._id},function(response,err){
+                Socket.emit('deleteMainRPi', {mainRPiID:id, userID:$scope.user._id},function(err,response){
                    if(err){
                        throw err;
                    }
@@ -101,7 +101,7 @@ myApp.controller('mainRPiApiController', ['$scope', 'Socket', 'AuthService', fun
         if($scope.form.mainRPiID!='' && $scope.form.name!=''){
             if($scope.form.mainRPiID.length==24){
             console.log('enviando el mainRPi a través de socket');
-            Socket.emit('addMainRPi',$scope.form,function(response,err){
+            Socket.emit('addMainRPi',$scope.form,function(err,response){
                 if(err){
                     console.log(err);
                     throw err;

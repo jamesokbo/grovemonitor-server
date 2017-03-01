@@ -15,7 +15,7 @@ module.exports=function(socket){
         throw err;
       }
       if(docs.length!=0){
-        fn(docs);    
+        fn(null,docs);    
       }
       else{
         console.log('No historic readings of that sensor');

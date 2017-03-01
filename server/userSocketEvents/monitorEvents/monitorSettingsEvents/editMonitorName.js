@@ -18,11 +18,11 @@ module.exports=function(socket){
                         throw err;
                     }
                     console.log(doc);
-                    fn({status:true});
+                    fn(null,{status:true});
                 });
             }
             else{
-                fn(null,errors.s007.toString());
+                fn(errors.s007.toString());
             }
         });
     });

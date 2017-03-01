@@ -18,7 +18,7 @@ module.exports=function(socket){
                         throw err;
                     }
                     console.log(doc);
-                    fn({status:true});
+                    fn(null,{status:true});
                 });
             }
             else{

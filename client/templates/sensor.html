@@ -3,5 +3,7 @@
     ng-click="mReading({mainRPiID:mainRPi.mainRPiID,monitorID:monitor.monitorID,sensor:sensor})">
         <i ng-class="monitor[sensor].nameIcon"></i><span>{{monitor[sensor].nameText}}</span>
     </button>
-    <button type="button" class="btn btn-reading {{monitor[sensor].status}}">{{getConvertedReading(sensor,monitor[sensor].unit,monitor[sensor].lastReading)+' '+monitor[sensor].unit}}</button><!--Aquí va la lectura de LUX-->
+    <button type="button" class="btn btn-reading {{monitor[sensor].status}}">
+        {{getConvertedReading(sensor,monitor[sensor].unit,monitor[sensor].lastReading)+' '+monitor[sensor].unit}}
+    </button>
 </div>

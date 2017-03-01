@@ -31,7 +31,7 @@ module.exports=function(socket){
                                 throw err;
                             }
                             response.savedToServer=true;
-                            fn({response});
+                            fn(null,{response});
                         });
                     });   
                 }
@@ -48,7 +48,7 @@ module.exports=function(socket){
                     });
                 }
             else{
-                fn(null,errors.s001);
+                fn(errors.s001);
             }
         });    
     });

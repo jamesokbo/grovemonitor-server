@@ -11,7 +11,7 @@ module.exports=function(socket){
                 throw err;
             }
             if(res.ok==1 && res.nModified==1){
-                fn({status:true});
+                fn(null,{status:true});
             }
             else{
                 fn(errors.s007);

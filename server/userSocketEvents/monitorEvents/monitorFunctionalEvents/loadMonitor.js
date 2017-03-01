@@ -8,7 +8,7 @@ module.exports=function(socket){
           if(err){
             throw err;
           }
-          fn(res[0]);
+          fn(null,res[0]);
         });
       });
 };

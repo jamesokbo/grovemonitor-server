@@ -18,13 +18,13 @@ module.exports=function(socket){
               console.log(res.ok+' '+res.nModified);
               if(res.ok==1 && res.nModified==1){
                 
-                fn({status:true});
+                fn(null,{status:true});
               }
             });
           }
           else{
             //Monitor sent an ID but it is not recognized by the server, this means it wasn't created by the server
-            fn(null,errors.s001);
+            fn(errors.s001);
             socket.disconnect();
           }
         });
@@ -39,7 +39,7 @@ module.exports=function(socket){
             if(err){
               throw err;
             }
-            fn({status:true, new: true, monitorID:mon._id});
+            fn(null,{status:true, new: true, monitorID:mon._id});
           });
         });
       }

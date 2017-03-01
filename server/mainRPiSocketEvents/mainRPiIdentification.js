@@ -28,7 +28,7 @@ module.exports=function(socket){
                 mainRPiArrays.mainRPis.push(socket);
                 console.log('mainRPi '+ socket.mainRPiID+' has succesfully been identified');
                 console.log('mainRPiIDs length: '+ mainRPiArrays.mainRPiIDs.length+',mainRPis length: '+mainRPiArrays.mainRPis.length);
-                fn({status:true});
+                fn(null,{status:true});
               }
             });
           }
@@ -50,7 +50,7 @@ module.exports=function(socket){
             if(err){
               throw err;
             }
-            fn({status:true, new: true, mainRPiID:mon._id});
+            fn(null,{status:true, new: true, mainRPiID:mon._id});
           });
         });
       }

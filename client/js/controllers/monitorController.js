@@ -29,7 +29,7 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
     
     //Functions
     $scope.loadMonitor=function(monitorID,fn){
-        Socket.emit('loadMonitor',{monitorID:monitorID},function(res,err){
+        Socket.emit('loadMonitor',{monitorID:monitorID},function(err,res){
            if(err){
                fn(null,err);
            }
@@ -124,7 +124,7 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
                 monitorID:$scope.monitor.monitorID,
                 newMonitorName:$scope.newMonitorName
             };
-            Socket.emit('editMonitorName',data,function(response,err){
+            Socket.emit('editMonitorName',data,function(err,response){
                 if(err){
                     console.log(err);
                 }
@@ -158,7 +158,7 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
             sensor:sensor,
             newUnit:newUnit
         };
-        Socket.emit('editSensorUnit',data,function(res,err){
+        Socket.emit('editSensorUnit',data,function(err,res){
             if(err){
                 console.log(err);
             }
@@ -179,7 +179,7 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
             sensor:sensor,
             newLBound:newLBound
         };
-        Socket.emit('editLBound',data,function(res, err) {
+        Socket.emit('editLBound',data,function(err,res) {
             if(err){
                 console.log(err);
             }
@@ -204,7 +204,7 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
             sensor:sensor,
             newUBound:newUBound
         };
-        Socket.emit('editUBound',data,function(res, err) {
+        Socket.emit('editUBound',data,function(err,res) {
             if(err){
                 console.log(err);
             }
@@ -230,7 +230,7 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
             newCalibration:newCalibration,
             date:Date.now()
         };
-        Socket.emit('editCalibration',data,function(res, err) {
+        Socket.emit('editCalibration',data,function(err,res) {
             if(err){
                 console.log(err);
             }
@@ -250,7 +250,7 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
         });
     };
     $scope.mReading= function(data){
-        Socket.emit('mReading',data,function(res,err){
+        Socket.emit('mReading',data,function(err,res){
             if(err){
                 throw err;
             }

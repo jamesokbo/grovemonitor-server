@@ -9,7 +9,7 @@ module.exports=function(socket){
           if(err){
             fn(err);
           }
-          fn(docs);
+          fn(null,docs);
         });
     })
 }

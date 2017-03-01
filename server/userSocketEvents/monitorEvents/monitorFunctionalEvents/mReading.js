@@ -6,7 +6,7 @@ var errors=require('../../../errors.js');
 
 module.exports=function(socket){
     socket.on('mReading',function(data,fn){
-        fn({status:'warning' ,reading:120, date:Date.now()});
+        fn(null,{status:'warning' ,reading:120, date:Date.now()});
         /*
         if(monArrays.monitorIDs.indexOf(data.mainRPiID.toString())!=-1){
             monArrays.monitors[monArrays.monitorIDs.indexOf(data.mainRPiID.toString())].emit('mReading',data,function(err,res){

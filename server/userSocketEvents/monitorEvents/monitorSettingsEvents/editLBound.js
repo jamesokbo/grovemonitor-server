@@ -47,20 +47,20 @@ module.exports=function(socket){
                             if(err){
                                 throw err;
                             }
-                            fn({status:true});
+                            fn(null,{status:true});
                         });  
                         //hasta aquí
                     }
                     else{
-                        fn(null,errors.s010.toString());
+                        fn(errors.s010.toString());
                     }
                 }
                 else{
-                    fn(null,errors.s009.toString());
+                    fn(errors.s009.toString());
                 }
             }
             else{
-                fn(null,errors.s007.toString());
+                fn(errors.s007.toString());
             }
         });
     });

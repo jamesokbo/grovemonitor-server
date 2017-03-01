@@ -6,7 +6,7 @@ module.exports={
     s005: Error('s005: Unable to remove mainRPi'),
     s006: Error('s006: No historic readings available for the requested sensor of this monitor'),
     s007: Error('s007: Unidentified monitor'),
-    s008: Error('s008: Monitor was not registered as connected'),
+    s008: Error('s008: MainRPi not connected'),
     s009: Error('s009: new boundarie Out of Bounds'),
-    s010: Error('s010: LowerBound must be smaller than UpperBound')
+    s010: Error('s010: LowerBound must be smaller than UpperBound'),
 };
