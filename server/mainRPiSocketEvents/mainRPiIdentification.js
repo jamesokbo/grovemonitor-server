@@ -25,6 +25,7 @@ module.exports=function(socket){
               }
               if(res.ok==1 && res.nModified==1){
                 mainRPiArrays.mainRPiIDs.push(socket.mainRPiID.toString());
+                
                 mainRPiArrays.mainRPis.push(socket);
                 console.log('mainRPi '+ socket.mainRPiID+' has succesfully been identified');
                 console.log('mainRPiIDs length: '+ mainRPiArrays.mainRPiIDs.length+',mainRPis length: '+mainRPiArrays.mainRPis.length);

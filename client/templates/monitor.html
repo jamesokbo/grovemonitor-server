@@ -24,11 +24,13 @@
                 <form ng-attr-id="{{'historic-form'+monitor.monitorID}}">
                     <div class="form-group col-md-6 col-sm-6 col-xs-6">
                         <label class='historicForm-title' for="fromDate">Start Date</label>
-                        <input type="date" class="form-control" ng-attr-id="{{'fromDate'+monitor.monitorID}}" ng-model="historicForm[monitor.monitorID].fromDate">
+                        <input type="date" class="form-control" ng-attr-id="{{'fromDate'+monitor.monitorID}}" 
+                        ng-model="historicForm[monitor.monitorID].fromDate">
                     </div>
                     <div class="form-group col-md-6 col-sm-6 col-xs-6">
                         <label class='historicForm-title' for="toDate">End Date</label>
-                        <input type="date" class="form-control" ng-attr-id="{{'toDate'+monitor.monitorID}}" ng-model="historicForm[monitor.monitorID].toDate">
+                        <input type="date" class="form-control" ng-attr-id="{{'toDate'+monitor.monitorID}}" 
+                        ng-model="historicForm[monitor.monitorID].toDate">
                     </div>
                     <div class="form-group col-md-6 col-sm-6 col-xs-6">
                         <label class='historicForm-title' for="sensorSelect">Sensor</label>
@@ -54,7 +56,8 @@
                 <strong>General</strong></a>
             </li>
             <li ng-repeat="sensor in monitor.sensors">
-                <a data-toggle="tab" ng-attr-data-target="{{'#'+sensor+monitor.monitorID}}" ng-click="deactivateEdit();setCalibrationData(sensor,'firstPoint')">
+                <a data-toggle="tab" ng-attr-data-target="{{'#'+sensor+monitor.monitorID}}" 
+                ng-click="deactivateEdit();setCalibrationData(sensor,'firstPoint')">
                     <strong><i ng-class="monitor[sensor].nameIcon"></i><span>{{monitor[sensor].nameText}}</span></strong>
                 </a>
             </li>
@@ -71,7 +74,8 @@
                             <input type='text' placeholder='{{monitor.name}}' ng-hide='!monitorNameEdit' ng-model="newMonitorName"></input>
                         </td>
                         <td>
-                            <i class="fa fa-pencil-square-o editButton" ng-hide='monitorNameEdit || !monitor.status' ng-click='toggleMonitorNameEdit()'></i>
+                            <i class="fa fa-pencil-square-o editButton" ng-hide='monitorNameEdit || !monitor.status'
+                            ng-click='toggleMonitorNameEdit()'></i>
                             <i class="fa fa-check editButton" ng-hide='!monitorNameEdit' ng-click='editMonitorName(); deactivateEdit()'></i>
                             <i class="fa fa-times editButton" ng-hide='!monitorNameEdit' ng-click='deactivateEdit()'></i>
                         </td>
@@ -79,15 +83,16 @@
                     <tr>
                         <td><strong>Add Sensor:</strong></td>
                         <td>
-                            <select class="form-control" id="sensorSelect" ng-model="newSensor">
+                            <select class="form-control" id="sensorSelect" ng-model="settings.newSensor">
                                 <option ng-repeat="sensor in availableSensors" value='{{sensor}}'> 
-                                    <!-- TODO: Show these options as icons, not the sensor keyword https://github.com/FortAwesome/Font-Awesome/issues/996 -->
+                                    <!-- TODO: Show these options as icons, 
+                                    not the sensor keyword https://github.com/FortAwesome/Font-Awesome/issues/996 -->
                                     <span>{{sensor}}</span>
                                 </option>
                             </select>
                         </td>
-                        <td><i class="fa fa-plus-square editButton" ng-hide="newSensor==''"
-                            ng-click='editMonitorName({monitorID:monitor.monitorID,newName:newMonitorName}); deactivateEdit()'></i>
+                        <td><i class="fa fa-plus-square editButton" ng-hide="settings.newSensor==''"
+                            ng-click='addSensor()'></i>
                         </td>
                     </tr>
                 </table>

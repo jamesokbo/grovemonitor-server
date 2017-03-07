@@ -4,7 +4,7 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
     $scope.newMonitorName="";
     $scope.monitorSettings=false;
     $scope.availableSensors=SensorService.sensors;
-    $scope.newSensor='';
+    $scope.settings.newSensor='';
     
     $scope.availableSensors = $scope.availableSensors.filter(function(el){
       return !$scope.monitor.sensors.includes(el);
@@ -114,9 +114,9 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
         $scope.settings.newLBound=null;
         $scope.settings.newLBound=null;
         $scope.settings.newCalibration=null;
-        $scope.newSensor='';
+        $scope.settings.newSensor='';
         
-    }; 
+    };
     
     $scope.editMonitorName=function(){
         if($scope.newMonitorName!=""){
@@ -258,5 +258,28 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
             $scope.monitor[data.sensor].lastDate=res.date;
             $scope.monitor[data.sensor].status=res.status;
         });
+    };
+    $scope.addSensor=function(){
+        if($scope.settings.newSensor!=""){
+            var data={
+                monitorID:$scope.monitor.monitorID,
+                newSensor:$scope.settings.newSensor
+            };
+            Socket.emit('addSensor',data,function(err,response){
+                if(err){
+                    console.log(err);
+                }
+                if(response.status){
+                    //TODO: Load the individual monitor
+                    $scope.loadMonitor($scope.monitor.monitorID,function(res,err){
+                        if(err){
+                            console.log(err);
+                        }
+                        $scope.monitor=res;
+                        $scope.deactivateEdit();
+                    });
+                }
+            });
+        }
     };
 }]);

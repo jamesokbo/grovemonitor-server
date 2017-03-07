@@ -144,12 +144,16 @@ MainRPi.update({},{$set:{status:false}},{multi:true},function(err,res){
   if(err){
     throw err;
   }
-  console.log(res.ok +' '+res.nModified);
-  if(res.ok==1){
-    http2.listen(8081,function(){
-      console.log('socketserver running @ port: 8081');
-    });
-  }
+  Monitor.update({},{$set:{status:false}},{multi:true},function(err,res){
+    if(err){
+      throw err;
+    }
+    else{
+      http2.listen(8081,function(){
+        console.log('socketserver running @ port: 8081');
+      });
+    }
+  });
 });
 
 
