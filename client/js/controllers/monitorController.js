@@ -4,7 +4,6 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
     $scope.newMonitorName="";
     $scope.monitorSettings=false;
     $scope.availableSensors=SensorService.sensors;
-    $scope.settings.newSensor='';
     
     $scope.availableSensors = $scope.availableSensors.filter(function(el){
       return !$scope.monitor.sensors.includes(el);
@@ -20,6 +19,7 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
     $scope.settings.newLBound=null;
     $scope.settings.newUBound=null;
     $scope.settings.newCalibration=null;
+    $scope.settings.newSensor='';
     
     //Calibration Settings
     $scope.calibrationPoint='firstPoint';
