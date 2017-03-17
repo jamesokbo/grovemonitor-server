@@ -10,11 +10,11 @@ var upperBoundaries=require('../../../upperBoundaries.js');
 
 module.exports=function(socket){
     socket.on('addSensor',function(data,fn){
+        console.log("adding sensor");
          Monitor.find({monitorID:data.monitorID},function(err,docs){
             if(err){
                 throw err;
             }
-            console.log(docs.length);
             if(docs.length==1){
                 var mainRPiIndex=mainRPiArrays.mainRPiIDs.indexOf(docs[0].mainRPiID);
                 if(mainRPiIndex!=-1){

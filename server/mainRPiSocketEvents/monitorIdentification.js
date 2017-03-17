@@ -36,11 +36,11 @@ module.exports=function(socket){
           if(err){
             throw err;
           }
-          Monitor.update({_id:mon._id},{$set:{monitorID:mon._id, mainRPiID:socket.mainRPiID}},function(err,res){
+          Monitor.update({_id:mon._id},{$set:{monitorID:mon._id.toString(), mainRPiID:socket.mainRPiID}},function(err,res){
             if(err){
               throw err;
             }
-            fn(null,{status:true, new: true, monitorID:mon._id});
+            fn(null,{status:true, new: true, monitorID:mon._id.toString()});
           });
         });
       }

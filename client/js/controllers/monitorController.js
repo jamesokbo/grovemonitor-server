@@ -5,12 +5,13 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
     $scope.monitorSettings=false;
     $scope.availableSensors=SensorService.sensors;
     
-    $scope.availableSensors = $scope.availableSensors.filter(function(el){
+    $scope.availableSensors = SensorService.sensors.filter(function(el){
       return !$scope.monitor.sensors.includes(el);
     });
     
     //Monitor Sensor Settings
     $scope.units=[];
+  
     $scope.sensorUnitEdit=false;
     $scope.lBoundEdit=false;
     $scope.uBoundEdit=false;
@@ -35,7 +36,6 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
            }
            else{
                fn(res);
-               $scope.setCalibrationData()
            }
         });
     };
@@ -276,6 +276,9 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
                             console.log(err);
                         }
                         $scope.monitor=res;
+                        $scope.availableSensors = SensorService.sensors.filter(function(el){
+                        return !$scope.monitor.sensors.includes(el);
+                        });
                         $scope.deactivateEdit();
                     });
                 }

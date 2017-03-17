@@ -114,6 +114,8 @@ io.on('connection', function(socket){
   //Request manual sensor reading
   require('./server/userSocketEvents/monitorEvents/monitorFunctionalEvents/mReading.js')(socket);
   //--monitorSettingsEvents
+  //Add sensor
+   require('./server/userSocketEvents/monitorEvents/monitorSettingsEvents/addSensor.js')(socket);
   //Edit LowerBound of any sensor
   require('./server/userSocketEvents/monitorEvents/monitorSettingsEvents/editLBound.js')(socket);
   //Edit UpperBound of any sensor
