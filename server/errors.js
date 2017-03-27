@@ -9,4 +9,6 @@ module.exports={
     s008: Error('s008: MainRPi not connected'),
     s009: Error('s009: new boundarie Out of Bounds'),
     s010: Error('s010: LowerBound must be smaller than UpperBound'),
+    s011: Error('s011: Unidentified user'),
+    s012: Error('s012: User already connected somewhere else')
 };

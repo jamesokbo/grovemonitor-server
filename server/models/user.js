@@ -5,8 +5,6 @@ var userSchema= mongoose.Schema({
         email: String, /*email del usuario*/
         verified: Boolean,
         newsletter: Boolean
-        
-   
 });
 
 userSchema.plugin(passportLocalMongoose);

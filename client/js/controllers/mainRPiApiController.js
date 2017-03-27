@@ -136,6 +136,15 @@ myApp.controller('mainRPiApiController', ['$scope', 'Socket', 'AuthService', fun
     //Despliega todos los mainRPies asociados a un usuario
     AuthService.getCurrentUser(function(data){
         $scope.user=data;
-        $scope.loadMainRPis($scope.user._id);
+        Socket.emit('userIdentification',{userID:$scope.user._id},function(err,res){
+            if(err){
+                throw err;
+            }
+            else{
+                if(res.status){
+                    $scope.loadMainRPis($scope.user._id);
+                }
+            }
+        });
     });
 }]);

@@ -54,6 +54,8 @@ var Monitor=require('./server/models/monitor');
 var User=require('./server/models/user');
 //Monitor arrays
 var mainRPiArrays=require('./server/mainRPiArrays.js');
+//User arrays
+var userArrays=require('./server/userArrays.js');
 
 //TEST TO INSTANTIATE MONITOR EXAMPLE
 //var monitor=new Monitor();
@@ -83,12 +85,18 @@ io.on('connection', function(socket){
   console.log('A user has connected');
   //--SERVER EVENTS--
   //--ServerFunctionalEvents
+  //identificación del usuario
+  require('./server/userSocketEvents/serverEvents/serverFunctionalEvents/userIdentification.js')(socket);
   //Regresar el usuario asociado al email
   require('./server/userSocketEvents/serverEvents/userProfileEvents/checkEmail.js')(socket);
   //Cuando el usuario se desconecta
   socket.on('disconnect', function(){
+    var userIndex=userArrays.userIDs.indexOf(socket.userID.toString());
+    if(userIndex!=-1){
+      userArrays.users.splice(userIndex,1);
+      userArrays.userIDs.splice(userIndex,1);
+    }
     socket.disconnect();
-    console.log('One user has left');
   });
   //Mensaje de prueba
   require('./server/userSocketEvents/serverEvents/serverFunctionalEvents/message.js')(socket);
