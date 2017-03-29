@@ -1,6 +1,7 @@
 var mongoose=require('mongoose');
 var Monitor=require('../models/monitor.js');
-var mainRPiArrays=require('../mainRPiArrays.js');
+var MainRPi=require('../models/mainRPi.js');
+var userArrays=require('../userArrays.js');
 var errors=require('../errors.js');
 
 module.exports=function(socket){
@@ -16,9 +17,16 @@ module.exports=function(socket){
               if(err){
                 throw err;
               }
-              console.log(res.ok+' '+res.nModified);
               if(res.ok==1 && res.nModified==1){
-                
+                MainRPi.find({mainRPiID:docs[0].mainRPiID},function(err,docs){
+                  if(err){
+                    throw err;
+                  }
+                  var userIndex=userArrays.userIDs.indexOf(docs[0].userID);
+                  if(userIndex!=-1){
+                    userArrays.users[userIndex].emit('monitorConnect',{monitorID:data.monitorID});
+                  }
+                });
                 fn(null,{status:true});
               }
             });

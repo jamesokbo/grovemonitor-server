@@ -32,10 +32,10 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
     $scope.loadMonitor=function(monitorID,fn){
         Socket.emit('loadMonitor',{monitorID:monitorID},function(err,res){
            if(err){
-               fn(null,err);
+               fn(err);
            }
            else{
-               fn(res);
+               fn(null,res);
            }
         });
     };
@@ -130,7 +130,7 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
                 }
                 if(response.status){
                     //TODO: Load the individual monitor
-                    $scope.loadMonitor($scope.monitor.monitorID,function(res,err){
+                    $scope.loadMonitor($scope.monitor.monitorID,function(err,res){
                         if(err){
                             console.log(err);
                         }
@@ -162,7 +162,7 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
             if(err){
                 console.log(err);
             }
-            $scope.loadMonitor($scope.monitor.monitorID,function(res,err){
+            $scope.loadMonitor($scope.monitor.monitorID,function(err,res){
                 if(err){
                     console.log(err);
                 }
@@ -185,7 +185,7 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
             }
             else{
                 if(res.status){
-                    $scope.loadMonitor($scope.monitor.monitorID,function(res,err){
+                    $scope.loadMonitor($scope.monitor.monitorID,function(err,res){
                         if(err){
                             console.log(err);
                         }
@@ -210,7 +210,7 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
             }
             else{
                 if(res.status){
-                    $scope.loadMonitor($scope.monitor.monitorID,function(res,err){
+                    $scope.loadMonitor($scope.monitor.monitorID,function(err,res){
                         if(err){
                             console.log(err);
                         }
@@ -236,7 +236,7 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
             }
             else{
                 if(res.status){
-                    $scope.loadMonitor($scope.monitor.monitorID,function(res,err){
+                    $scope.loadMonitor($scope.monitor.monitorID,function(err,res){
                         if(err){
                             console.log(err);
                         }
@@ -271,7 +271,7 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
                 }
                 if(response.status){
                     //TODO: Load the individual monitor
-                    $scope.loadMonitor($scope.monitor.monitorID,function(res,err){
+                    $scope.loadMonitor($scope.monitor.monitorID,function(err,res){
                         if(err){
                             console.log(err);
                         }
@@ -285,4 +285,24 @@ myApp.controller('monitorController', ['$scope', 'Socket', 'SensorService', func
             });
         }
     };
+    
+    //SERVER EVENTS
+    Socket.on('monitorConnect',function(data){
+        if(data.monitorID.toString()==$scope.monitor.monitorID.toString()){
+            $scope.monitor.status=true;
+            $scope.loadMonitor($scope.monitor.monitorID,function(err,res){
+                if(err){
+                    console.log(err);
+                }
+                $scope.monitor=res;
+            });
+        }
+    });
+    Socket.on('monitorDisconnect',function(data){
+        if(data.monitorID.toString()==$scope.monitor.monitorID.toString()){
+            $scope.monitor.status=false;
+        }
+    });
+    
+    console.log($scope.monitor.monitorID);
 }]);

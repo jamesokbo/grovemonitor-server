@@ -44,17 +44,17 @@ function MainRPiController($scope, Socket, SensorService) {
         }); 
     };
     $scope.loadMonitors=function(){
-        $scope.monitors=[];
-        $scope.monitorIDs=[];
-
         Socket.emit('loadMonitors',{mainRPiID:$scope.mainRPi.mainRPiID},function(err,res){
             if(err){
                 throw err;
             }
+            var newMonitorIDs=[];
             $scope.monitors=res;
+            
             for(var i=0; i<res.length; i++){
-                $scope.monitorIDs[i]=res[i].monitorID;
+                newMonitorIDs[i]=res[i].monitorID;
             }
+            $scope.monitorIDs=newMonitorIDs;
         });
     };
     $scope.toggleMainRPiNameEdit=function(){
@@ -67,6 +67,18 @@ function MainRPiController($scope, Socket, SensorService) {
       }
     };
     
+    //SERVER EVENTS
+    Socket.on('mainRPiConnect',function(data){
+        if(data.mainRPiID.toString()==$scope.mainRPi.mainRPiID.toString()){
+            $scope.mainRPi.status=true;
+            $scope.loadMonitors();
+        }
+    });
+    Socket.on('mainRPiDisconnect',function(data){
+        if(data.mainRPiID.toString()==$scope.mainRPi.mainRPiID.toString()){
+            $scope.mainRPi.status=false;
+        }
+    });
     
     //RUN WHEN MAINRPI IS INSTANCIATED
     $scope.loadMonitors();

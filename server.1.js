@@ -1,3 +1,4 @@
+
 //Initialize express framework
 var express =require('express');
 var app=express();
@@ -72,7 +73,7 @@ monitorIO.on('connection', function(socket){
   console.log("received new mainRPi connection");
   socket.mainRPi=new MainRPi();
   socket.mainID='';
-  require('./server/mainRPiSocketEvents/disconnect.js')(socket);
+  require('./server/mainRPiSocketEvents/mainRPiDisconnect.js')(socket);
   require('./server/mainRPiSocketEvents/mainRPiIdentification.js')(socket);
   require('./server/mainRPiSocketEvents/message.js')(socket);
   require('./server/mainRPiSocketEvents/monitorDisconnect.js')(socket);
@@ -90,14 +91,7 @@ io.on('connection', function(socket){
   //Regresar el usuario asociado al email
   require('./server/userSocketEvents/serverEvents/userProfileEvents/checkEmail.js')(socket);
   //Cuando el usuario se desconecta
-  socket.on('disconnect', function(){
-    var userIndex=userArrays.userIDs.indexOf(socket.userID.toString());
-    if(userIndex!=-1){
-      userArrays.users.splice(userIndex,1);
-      userArrays.userIDs.splice(userIndex,1);
-    }
-    socket.disconnect();
-  });
+  require('./server/userSocketEvents/serverEvents/serverFunctionalEvents/disconnect.js')(socket);
   //Mensaje de prueba
   require('./server/userSocketEvents/serverEvents/serverFunctionalEvents/message.js')(socket);
   //--MAINRPI--

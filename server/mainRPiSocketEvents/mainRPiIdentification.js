@@ -1,6 +1,7 @@
 var mongoose=require('mongoose');
 var MainRPi=require('../models/mainRPi.js');
 var mainRPiArrays=require('../mainRPiArrays.js');
+var userArrays=require('../userArrays.js');
 var errors=require('../errors.js');
 
 module.exports=function(socket){
@@ -25,10 +26,11 @@ module.exports=function(socket){
               }
               if(res.ok==1 && res.nModified==1){
                 mainRPiArrays.mainRPiIDs.push(socket.mainRPiID.toString());
-                
                 mainRPiArrays.mainRPis.push(socket);
-                console.log('mainRPi '+ socket.mainRPiID+' has succesfully been identified');
-                console.log('mainRPiIDs length: '+ mainRPiArrays.mainRPiIDs.length+',mainRPis length: '+mainRPiArrays.mainRPis.length);
+                var userIndex=userArrays.userIDs.indexOf(docs[0].userID);
+                if(userIndex!=-1){
+                  userArrays.users[userIndex].emit('mainRPiConnect',{mainRPiID:docs[0].mainRPiID});
+                }
                 fn(null,{status:true});
               }
             });

@@ -1,9 +1,11 @@
 var Monitor=require('../models/monitor.js');
+var MainRPi=require('../models/mainRPi.js');
+var userArrays=require('../userArrays.js');
 var errors=require('../errors.js');
 
 module.exports=function(socket){
     socket.on('monitorDisconnect',function(data,fn){
-        if(data.monitorID!=0 && data.monitorID!=null){
+        if(data.monitorID!=''){
             Monitor.find({monitorID:data.monitorID},function(err,docs){
                 if(err){
                     throw err;
@@ -18,6 +20,15 @@ module.exports=function(socket){
                         }
                         else{
                             fn(errors.s008);
+                        }
+                    });
+                    MainRPi.find({mainRPiID:docs[0].mainRPiID},function(err,docs){
+                        if(err){
+                            throw err;
+                        }
+                        var userIndex=userArrays.userIDs.indexOf(docs[0].userID);
+                        if(userIndex!=-1){
+                            userArrays.users[userIndex].emit('monitorDisconnect',{monitorID:data.monitorID});
                         }
                     });
                 }
