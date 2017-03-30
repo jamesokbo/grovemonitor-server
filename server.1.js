@@ -19,7 +19,7 @@ mongoose.connect(configDB.url);
 var bodyParser =require('body-parser');
 var methodOverride= require('method-override');
 
-var morgan =require('morgan');
+//var morgan =require('morgan');
 
 var passport=require('passport');
 var localStrategy=require('passport-local').Strategy;
@@ -36,7 +36,7 @@ app.use(session({secret: 'grovesecret', saveUninitialized: true, resave: true}))
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
-app.use(morgan('dev'));
+//app.use(morgan('dev'));
 
 var port= process.env.PORT;
 

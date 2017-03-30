@@ -32,7 +32,9 @@ module.exports=function(socket){
                       if(err){
                         throw err;
                       }
-                      userArrays.users[userIndex].emit('monitorDisconnect',{mainRPiID:docs[0].monitorID});
+                      if(userIndex!=-1){
+                        userArrays.users[userIndex].emit('monitorDisconnect',{mainRPiID:docs[0].monitorID});
+                      }
                     });
                   }
                 }
