@@ -1,12 +1,8 @@
-var mongoose=require('mongoose');
 var timeoutCallback=require('timeout-callback');
-var MainRPi=require('../../../models/mainRPi.js');
 var mainRPiArrays=require('../../../mainRPiArrays.js');
 var Monitor=require('../../../models/monitor.js');
 var errors=require('../../../errors.js');
 var constants=require('../../../constants.js');
-var lowerBoundaries=require('../../../lowerBoundaries.js');
-var upperBoundaries=require('../../../upperBoundaries.js');
 
 module.exports=function(socket){
     socket.on('addSensor',function(data,fn){
