@@ -77,6 +77,7 @@ function MainRPiController($scope, Socket, SensorService) {
     Socket.on('mainRPiDisconnect',function(data){
         if(data.mainRPiID.toString()==$scope.mainRPi.mainRPiID.toString()){
             $scope.mainRPi.status=false;
+            $scope.loadMonitors();
         }
     });
     

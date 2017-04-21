@@ -39,7 +39,6 @@ module.exports=function(socket){
                   }
                 }
                 if(mainRPiArrays.mainRPiIDs.indexOf(socket.mainRPiID.toString())!=-1){
-                  console.log('mainRPi: '+socket.mainRPiID+' has disconnected!');
                   mainRPiArrays.mainRPis.splice(mainRPiArrays.mainRPiIDs.indexOf(socket.mainRPiID.toString()),1);
                   mainRPiArrays.mainRPiIDs.splice(mainRPiArrays.mainRPiIDs.indexOf(socket.mainRPiID.toString()),1);
                 }

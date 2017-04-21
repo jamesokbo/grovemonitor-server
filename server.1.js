@@ -28,7 +28,6 @@ var flash=require('connect-flash');
 var cookieParser=require('cookie-parser');
 var session = require('express-session');
 
-
 app.use(bodyParser.json());
 app.use(methodOverride());
 app.use(cookieParser());
@@ -58,19 +57,16 @@ var mainRPiArrays=require('./server/mainRPiArrays.js');
 //User arrays
 var userArrays=require('./server/userArrays.js');
 
-//TEST TO INSTANTIATE MONITOR EXAMPLE
-//var monitor=new Monitor();
-//monitor.save();
-
-
 //Configuración de passport para autentificación de usuario
 passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+var statuscheck=require('socketio-statuscheck');
+
 //Lógica de comunicación con el mainRPi (Identificación y lecturas manuales)
 monitorIO.on('connection', function(socket){
-  console.log("received new mainRPi connection");
+  statuscheck(socket,'server');
   socket.mainRPi=new MainRPi();
   socket.mainID='';
   require('./server/mainRPiSocketEvents/mainRPiDisconnect.js')(socket);
@@ -159,7 +155,6 @@ MainRPi.update({},{$set:{status:false}},{multi:true},function(err,res){
     }
   });
 });
-
 
 //arrancar el servidor de la web app
 http.listen(port, function(){
