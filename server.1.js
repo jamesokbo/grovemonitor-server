@@ -79,7 +79,6 @@ monitorIO.on('connection', function(socket){
 
 //Lógica de comunicación con los usuarios
 io.on('connection', function(socket){
-  console.log('A user has connected');
   //--SERVER EVENTS--
   //--ServerFunctionalEvents
   //identificación del usuario

@@ -1,5 +1,4 @@
 myApp.controller('mainRPiApiController', ['$scope', 'Socket', 'AuthService', function($scope, Socket, AuthService){
-    console.log("entered mainRPiApiController");
     $scope.mainRPis=[];
     $scope.mainRPiIDs=[];
     $scope.addForm=false;
@@ -53,7 +52,6 @@ myApp.controller('mainRPiApiController', ['$scope', 'Socket', 'AuthService', fun
                 for(var i=0;i<response.length;i++){
                     $scope.mainRPiIDs.push(response[i].mainRPiID);
                 }
-                console.log('received '+$scope.mainRPis.length+' mainRPis')
             });
         }
     };
@@ -130,12 +128,16 @@ myApp.controller('mainRPiApiController', ['$scope', 'Socket', 'AuthService', fun
     
     $scope.$on('$locationChangeStart', function(event){
         Socket.emit('disconnect');
+        Socket.disconnect();
     });
     
     //AQUÍ SE DEFINEN LOS PROCEDIMIENTOS QUE CORREN EN AUTOMÁTICO
     //Despliega todos los mainRPies asociados a un usuario
     AuthService.getCurrentUser(function(data){
+        $scope.user={};
         $scope.user=data;
+        Socket.connect();
+        
         Socket.emit('userIdentification',{userID:$scope.user._id},function(err,res){
             if(err){
                 throw err;
